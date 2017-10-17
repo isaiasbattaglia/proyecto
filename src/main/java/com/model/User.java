@@ -29,7 +29,7 @@ public class User extends Model {
   *Constructor de la clase User
   *@Param username=nombre de usuario, email=Correo electronico, password=Contraseña
   **/
-  public User(String username, String email, String password){
+    public User(String username, String email, String password){
     validatePresenceOf("username").message("Please, provide your username");
     validatePresenceOf("password").message("Please, provide your username");
     validatePresenceOf("email").message("please, provide your email");
@@ -50,23 +50,67 @@ public class User extends Model {
     set("total_questions",0);
     saveIt();
   }
-  /**
-  *Metodo que permite modificar las vidas de un usuario
-  *@Param newLives nuevas vidas del usuario
-  **/
+
+  public void setUsername(String username)
+  {set("username",username).saveIt();}
+
+  public void setEmail(String email)
+  {set("email",email).saveIt();}
+
+  public void setPassword(String password)
+  {set("password",password).saveIt();}
+
   public void setLives(Integer newLives)
   {set("lives",newLives).saveIt();}
 
-  /**
-  *Metodo que crea un juego para un determinado usuario
-  *@Return a Game
-  **/
-  public Game createGame()
-  {//set("lives",((Integer)get("lives"))-1).saveIt();
-  return new Game((Long)this.get("id"));
+  public void setTotalPoints(Integer tpoints)
+  {set("total_points", tpoints).saveIt();}
 
-  }
+  public void setCorrectQuestions(Integer cQuestion)
+  {set("correct_questions",cQuestion).saveIt();}
+
+  public void setIncorrectQuestions(Integer inQuestion)
+  {set("incorrect_questions",inQuestion).saveIt();}
+
+  public void setTotalQuestions(Integer tQuestions)
+  {set("total_questions",tQuestions).saveIt();}
+
+  public void setLevel(Integer level)
+  {set("level",level).saveIt();}
+
+  public String getUsername()
+  {return (String) get("username");}
+
+  public String getEmail() 
+  {return (String) get("email");}
   
+  public String getPassword()
+  {return (String) get("password");}
+  
+  public Integer getLives()
+  {return (Integer) get("lives");}
+
+  public Integer getTotalPoints()
+  {return (Integer) get("total_points");}
+
+  public Integer getCorrectQuestions()
+  {return (Integer) get("correct_questions");}
+
+  public Integer getIncorrectQuestions()
+  {return (Integer) get("incorrect_questions");}
+
+  public Integer getTotalQuestions()
+  {return (Integer) get("total_questions");}
+
+  public Integer getLevel()
+  {return (Integer) get("level");}
+
+  public String username()
+  {return (String)this.get("username");}
+
+  public Integer level()
+  {return (Integer)this.get("level");}
+
   /**
   *Metodo que retorna todos los juegos que inicio (this) un jugador.
   *@Return lista de juegos de this.
@@ -112,23 +156,7 @@ public class User extends Model {
     return;
   }
 
-  public static boolean validUser(String name, String password){
-    List<User> user = User.where("username = ? and password = ? ", name, password);
-    return user.size()==1;
-  }
 
-  public static User getUser(String name, String password){
-    List<User> ls = User.where("username = ? and password = ? ",name,password);
-    if (ls.size()==0)
-      throw new IllegalArgumentException("NO valid user");
-    return ls.get(0);
-  }
 
-  public String username(){
-    return (String)this.get("username");
-  }
 
-  public Integer level(){
-    return (Integer)this.get("level");
-  }
 }
