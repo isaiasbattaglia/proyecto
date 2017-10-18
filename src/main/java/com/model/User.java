@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.HashMap;
 import org.javalite.activejdbc.validation.UniquenessValidator;
 
+
+
 public class User extends Model {
   private static Map<Integer,Integer> cache =new HashMap<Integer,Integer> ();
   static{

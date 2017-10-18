@@ -196,11 +196,11 @@ public class UserTest{
     Object id_O = u.getId();
     Long id = Long.parseLong(id_O.toString());
     Game game = new Game();
-    game.set("user_id",id);
-    game.set("questions_Correct",-1);
-    game.set("questions_Incorrect",0);
+    game.set("user1_id",id);
+    game.set("correct_questions1",-1);
+    game.set("wrong_questions1",0);
     game.saveIt();
-    assertEquals((((Integer)game.get("questions_Correct"))>=0),false);
+    assertEquals((((Integer)game.get("correct_questions1"))>=0),false);
   }
 
 

@@ -42,9 +42,9 @@ public class GameTest{
     Object id_O_u = u.getId();
     Long id = Long.parseLong(id_O_u.toString());
     Game game = new Game();
-    game.set("user_id",id);
-    game.set("questions_Correct",0);
-    game.set("questions_Incorrect",0);
+    game.set("user1_id",id);
+    game.set("correct_questions1",0);
+    game.set("wrong_questions1",0);
     game.saveIt();
     
     Category c = new Category("Historia");
@@ -62,7 +62,7 @@ public class GameTest{
     question.set("category_id",id_cat);
     question.saveIt();
     answerQuestion(true,game);
-    assertEquals(((((Integer)game.get("questions_Correct")).compareTo(new Integer(0)))>0),true);  //Se incremento la cantidad de preguntas correctas.
+    assertEquals(((((Integer)game.get("correct_questions1")).compareTo(new Integer(0)))>0),true);  //Se incremento la cantidad de preguntas correctas.
   }
 
   @Test
@@ -83,9 +83,9 @@ public class GameTest{
     Object id_O = u.getId();
     Long id = Long.parseLong(id_O.toString());
     Game game = new Game();
-    game.set("user_id",id);
-    game.set("questions_Correct",0);
-    game.set("questions_Incorrect",0);
+    game.set("user1_id",id);
+    game.set("correct_questions1",0);
+    game.set("wrong_questions1",0);
     game.saveIt();
 
     Category c = new Category("Historia");
@@ -103,7 +103,7 @@ public class GameTest{
     question.set("category_id",id_cat);
     question.saveIt();
     answerQuestion(false,game);
-    assertEquals(((((Integer)game.get("questions_Incorrect")).compareTo(new Integer(0)))>0),true);// Se incremento la cantidad de preguntas incorrectas.
+    assertEquals(((((Integer)game.get("wrong_questions1")).compareTo(new Integer(0)))>0),true);// Se incremento la cantidad de preguntas incorrectas.
   }
 
   @Test
@@ -124,11 +124,11 @@ public class GameTest{
     Object id_O = u.getId();
     Long id = Long.parseLong(id_O.toString());
     Game game = new Game();
-    game.set("user_id",id);
-    game.set("questions_Correct",-1);
-    game.set("questions_Incorrect",0);
+    game.set("user1_id",id);
+    game.set("correct_questions1",-1);
+    game.set("wrong_questions1",0);
     game.saveIt();
-    assertEquals((((Integer)game.get("questions_Correct"))>=0),false);
+    assertEquals((((Integer)game.get("correct_questions1"))>=0),false);
   }
 
   private void answerQuestion(boolean question, Game game){
@@ -138,6 +138,7 @@ public class GameTest{
       game.updateGame(false);
     game.saveIt();    
   }
+}
 
 
   /*@Test
@@ -160,8 +161,7 @@ public class GameTest{
     System.out.println(u.get("lives"));
     game.saveIt();
     assertEquals((((Integer)u.get("lives")).compareTo(new Integer(2)))==0,true);    
-  }*/
-}
+  }*/ 
   
 //}
 

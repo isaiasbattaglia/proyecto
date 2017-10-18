@@ -1,29 +1,35 @@
 package trivia;
-
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.BelongsToParents;
+import org.javalite.activejdbc.annotations.BelongsTo;
 
+@BelongsToParents({ 
+@BelongsTo(foreignKeyName="user1_id",parent=User.class), 
+@BelongsTo(foreignKeyName="user2_id",parent=User.class) 
+}) 
+ 
 public class Game extends Model {
   static{
-    validatePresenceOf("user_id").message("Please, provide a user id");
-    validatePresenceOf("questions_Correct").message("Please, initialize questions_Correct");
-    validatePresenceOf("questions_Incorrect").message("Please, initialize questions_Incorrect");
+    validatePresenceOf("user1_id").message("Please, provide a user id");
+    validatePresenceOf("correct_questions1").message("Please, initialize correct_questions");
+    validatePresenceOf("wrong_questions1").message("Please, initialize wrong_questions");
   }
-  
+
   /**
   *Constructor por defecto de la clase Game
   **/
   public Game(){}
 
   public Game(Integer user_id){
-    validatePresenceOf("user_id").message("Please, provide a user id");
-    validatePresenceOf("questions_Correct").message("Please, initialize questions_Correct");
-    validatePresenceOf("questions_Incorrect").message("Please, initialize questions_Incorrect");
+    validatePresenceOf("user1_id").message("Please, provide a user id");
+    validatePresenceOf("correct_questions1").message("Please, initialize correct_questions");
+    validatePresenceOf("wrong_questions1").message("Please, initialize wrong_questions");
   	set("round",0);
     set("total_rounds",5);
-  	set("user_id",user_id);
-    set("state","en_proceso");
-    set("questions_Correct",0);
-    set("questions_Incorrect",0);
+  	set("user1_id",user_id);
+    set("state","Turn1");
+    set("correct_questions1",0);
+    set("wrong_questions1",0);
     saveIt();
     User user = this.parent(User.class);
     user.set("lives",user.getLives()-1).saveIt();
@@ -34,7 +40,7 @@ public class Game extends Model {
   }
 
   public void setUserId(Integer uId){
-    set("user_id",uId).saveIt();
+    set("user1_id",uId).saveIt();
   }
 
   public void setState(String state){
@@ -46,11 +52,11 @@ public class Game extends Model {
   }
 
   public void setQuestionsCorrect(Integer cc){
-    set("questions_Correct",cc).saveIt();
+    set("correct_questions1",cc).saveIt();
   }
 
   public void setQuestionsIncorrect(Integer ic){
-    set("questions_Incorrect",ic).saveIt();
+    set("wrong_questions1",ic).saveIt();
   }
 
   public Integer getRound(){
@@ -58,7 +64,7 @@ public class Game extends Model {
   }
 
   public Long getUserId(){
-    return (Long) get("user_id");
+    return (Long) get("user1_id");
   }
   
   public String getState(){
@@ -70,38 +76,22 @@ public class Game extends Model {
   }
 
   public Integer getQuestionsCorrect(){
-    return (Integer) get("questions_Correct");
+    return (Integer) get("correct_questions1");
   }
 
   public Integer getQuestionsIncorrect(){
-    return (Integer) get("questions_Incorrect");
+    return (Integer) get("wrong_questions1");
   }
 
   public Integer getGameId(){
     return getInteger("id");
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
   *Metodo que permite rendirse durante una partida
   **/
   public void whiteFlag()
-    {set("state","finalizada");}
+    {set("state","Finalized");}
   
 
   public String state(){
@@ -113,7 +103,7 @@ public class Game extends Model {
   }
 
   public void finalized(){
-    this.set("state","finalizado").saveIt();
+    this.set("state","Finalized").saveIt();
   }
 
   public Integer getActualRound()
@@ -121,8 +111,8 @@ public class Game extends Model {
 
   public void updateGame(boolean correct){
     if(correct)
-      set("questions_Correct",(Integer)get("questions_Correct")+1).saveIt();
+      set("correct_questions1",(Integer)get("correct_questions1")+1).saveIt();
     else
-      set("questions_Incorrect",(Integer)get("questions_Incorrect")+1).saveIt();
+      set("wrong_questions1",(Integer)get("wrong_questions1")+1).saveIt();
   }
 }
