@@ -4,7 +4,7 @@ import java.util.List;
 public class GameService{
 	
 	public static List<Game> getGames(Integer user_Id){
-		return Game.where("user_id = ? and state=?", user_Id, "En_Proceso");
+		return Game.where("user1_id = ? and state=?", user_Id, "My_turn");
 	}
 
 	public static Game createGame(Integer id){
@@ -17,7 +17,7 @@ public class GameService{
 
   	//Ver lo del id de usuario
   	public static Game getLastGame(Integer id_u){
-    	return Game.findFirst("user_id=? order by id desc", id_u);
+    	return Game.findFirst("user1_id=? order by id desc", id_u);
   	}
 
   public static void updateGame(Game game, boolean correct){
