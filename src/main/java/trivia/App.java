@@ -2,15 +2,28 @@ package trivia;
 import org.javalite.activejdbc.Base;
 import trivia.User;
 import java.util.List;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import static spark.Spark.*;
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
+import java.util.concurrent.ConcurrentHashMap;
+import org.eclipse.jetty.websocket.api.Session;
+import org.json.JSONObject;
+import static j2html.TagCreator.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.json.JSONArray;
 
 public class App{
+  static Map<Session, User> userUsernameMap = new ConcurrentHashMap<>();
+
   public static void main( String[] args ){
+
     staticFileLocation("/public");
+
+    webSocket("/onlineGame", MultiplayerWebSocket.class);init();
 
     before((req, res)->{Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/trivia", "root", "root");});
     
@@ -41,5 +54,33 @@ public class App{
     get("/profile", UserController::profile, new MustacheTemplateEngine());
 
     get("/ranking", UserController::ranking, new MustacheTemplateEngine());
+
+    get("/waitingRoom", GameController::waitingRoom, new MustacheTemplateEngine());
+
+    get("/userInfo", "application/json", UserController::getUserInfo);
+
   }
+
+     //Sends a message from one user to all users, along with a list of current usernames
+    public static void broadcastMessage(String message) {
+        userUsernameMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
+            try {
+                session.getRemote().sendString(String.valueOf(new JSONObject()
+                    .put("msg",message)
+                    .put("userlist",generateJsonArray(userUsernameMap.values()))
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private static JSONArray generateJsonArray(Collection<User> c){
+      Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/trivia", "root", "root");
+      JSONArray array = new JSONArray();
+      for (User u : c)
+        array.put(UserService.userToJSON(u));
+      Base.close();
+      return array;
+    }
 }

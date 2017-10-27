@@ -12,7 +12,7 @@ public class GameController{
 
 	public static ModelAndView gameHome(Request req, Response res){
 		Map map = new HashMap();
-		Integer id = req.session().attribute("user");
+		Integer id = req.session().attribute("userID");
 		User actualUser = UserService.getUser(id);
     List<Game> games = GameService.getGames(id);
 	  map.put("games", games);  
@@ -23,7 +23,7 @@ public class GameController{
 
   public static ModelAndView newGame(Request req, Response res){
   	Map map = new HashMap();
-		Integer userID = req.session().attribute("user");
+		Integer userID = req.session().attribute("userID");
 		User actualUser = UserService.getUser(userID);
 
     if (actualUser.getLives().compareTo(0)>0){
@@ -46,7 +46,7 @@ public class GameController{
 
   public static ModelAndView play(Request req, Response res){
   	Map map = new HashMap();
-    Integer userID = req.session().attribute("user");
+    Integer userID = req.session().attribute("userID");
 
     Game game = GameService.getLastGame(userID);
   	Integer gameID = (req.queryParams("game_id")==null)? game.getGameId(): Integer.parseInt(req.queryParams("game_id"));
@@ -79,7 +79,7 @@ public class GameController{
   
   public static ModelAndView finalizedGame(Request req, Response res){
     Map map = new HashMap();
-    Integer userID = (req.session().attribute("user"));
+    Integer userID = (req.session().attribute("userID"));
     Integer gameID = Integer.parseInt(req.queryParams("game_id"));
     Game game = GameService.getGame(gameID);
     User actualUser = UserService.getUser(userID);
@@ -88,4 +88,8 @@ public class GameController{
     map.put("In_ans",game.get("questions_Incorrect"));
     return new ModelAndView(map, "./views/games/finalizedGame.mustache");
   }
+  public static ModelAndView waitingRoom(Request req, Response res){
+    return new ModelAndView(new HashMap(), "./views/games/waitingRoom.html");
+  }
+
 }
