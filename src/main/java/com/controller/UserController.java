@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import org.javalite.activejdbc.Base;
+import org.json.JSONObject;
 
 
 public class UserController{
@@ -40,23 +41,19 @@ public class UserController{
 		Map map = new HashMap();
 		String username = req.queryParams("nickname");
 		String password = req.queryParams("password");
-
 		if(UserService.validUser(username,password)){
-			Integer userID = UserService.getUserId(username,password);
-			createUserSession(req,userID);
-			User actualUser = UserService.getUser(username,password);
-			List<Game> games = GameService.getGames(userID);
-			res.redirect("/games");
-			return new ModelAndView(map,"./views/home.mustache"); //PREGUNTAR!!
-			/*map.put("games",games);
-			map.put("lives",actualUser.getLives());
-			map.put("level",actualUser.getLevel());
-			return new ModelAndView (map, "./views/games/home.mustache");*/
-			//return new ModelAndView(map, "./views/users/new.mustache");
-			//return new ModelAndView("redirect:/games");
-			//ModelAndView modelAndView =  new ModelAndView("redirect:/games");
-			//return modelAndView;
-			//getInstance().redispatch("/games", req, res);
+			if(sessionOpen(req)){
+				map.put("SessionOpen","Ya has iniciado sesion como: " + req.session().attribute("user"));
+				return new ModelAndView(map,"./views/home.mustache");
+			}
+			else{
+				Integer userID = UserService.getUserId(username,password);
+				User currentUser = UserService.getUser(username,password);
+				createUserSession(req,userID,currentUser.getUsername());
+				List<Game> games = GameService.getGames(userID);
+				res.redirect("/games");
+				return new ModelAndView(map,"./views/home.mustache");
+			}
 		}
 		else{
 			map.put("error","usuario o contraseña incorrecta");
@@ -67,20 +64,22 @@ public class UserController{
 	public static ModelAndView userLogout(Request req, Response res){
 		if (req.session().attribute("user")!=null){ 
       		req.session().removeAttribute("user");
+      		req.session().removeAttribute("userID");
       		req.session().removeAttribute("correct_answer");
     	}
     	return new ModelAndView(new HashMap(), "./views/home.mustache");
 	}
 
-	private static void createUserSession(Request req, Integer id){
+	private static void createUserSession(Request req, Integer id, String username){
 		req.session(true);
-		req.session().attribute("user",id);
+		req.session().attribute("user",username);
+		req.session().attribute("userID",id);
 		req.session().attribute("correct_answer",0); //Sacar
 	}
 
 	public static ModelAndView profile(Request req, Response res){
 		Map data = new HashMap();
-		Integer userID = (req.session().attribute("user"));
+		Integer userID = (req.session().attribute("userID"));
 		User actualUser = UserService.getUser(userID);
 		data.put("lifes",actualUser.getLives());
 		data.put("Total_Points",actualUser.getTotalPoints());
@@ -98,5 +97,15 @@ public class UserController{
     List<User> top10 =  UserService.top10();
     map.put("ranking",top10);
     return new ModelAndView(map,"./views/ranking.mustache");
+	}
+
+	public static JSONObject getUserInfo(Request req, Response res){
+	    res.type("application/json");
+	    int userID = req.session().attribute("userID");
+	    User actualUser = User.findById(userID);
+	    return UserService.userToJSON(actualUser);
+	}	
+	private static boolean sessionOpen(Request req){
+		return (req.session().attribute("userID")!=null);
 	}
 }

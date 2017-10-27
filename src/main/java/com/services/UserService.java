@@ -2,7 +2,7 @@ package trivia;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.json.JSONObject;
 
 
 public class UserService{
@@ -68,6 +68,13 @@ public class UserService{
   //public static Boolean upadteQuestionScore() {
     //set("correct_questions",cQuestion).set("", totalQuestion).saveIt();
   //}
+
+  public static JSONObject userToJSON(User user){
+    JSONObject res = new JSONObject();
+    res.put("id",user.getInteger("id"));
+    res.put("username",user.getUsername());
+    return res;
+  }
 
   public static Integer pointsToNextLevel(User user){
       return (memoFib(user.getLevel()))*10;
