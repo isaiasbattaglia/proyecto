@@ -4,7 +4,7 @@ import java.util.List;
 public class GameService{
 	
 	public static List<Game> getGames(Integer user_Id){
-		return Game.where("user1_id = ? and state=?", user_Id, "My_turn");
+		return Game.where("user1_id = ? and state=?", user_Id, "Turn1");
 	}
 
 	public static Game createGame(Integer id){
