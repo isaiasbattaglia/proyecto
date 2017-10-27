@@ -35,8 +35,20 @@ function sendMessage(message) {
     }
 }
 
-//Update the chat-panel, and the list of connected users
 function updateChat(msg) {
+    var data = JSON.parse(msg.data);
+    id("userlist").innerHTML = "";
+    data.userlist.forEach(function (user) {
+        var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="play(this.value)">Play</buton></li>`;
+        var form = `<form action="/1v1Mode" method="get">${input}</form>`;
+        insert("userlist", form); 
+    });
+}
+
+function play(rivalID){
+    game = new Game(user,rivalID,"newGame");
+    var jsonString = JSON.stringify(game);
+    webSocket.send(jsonString);
 }
 
 //Helper function for inserting HTML as the first child of an element
@@ -51,5 +63,11 @@ function id(id) {
 
 function sendUserInfo(){
     getUserInfo();
+    var jsonObj = {"id": user, "message":"connect"};
+    var jsonString = JSON.stringify(jsonObj);
+    console.log("Into sendUserInfo");
+    console.log(jsonString);
+    console.log(jsonObj);
+    webSocket.send(jsonString); 
 }
 

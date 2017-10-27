@@ -20,10 +20,19 @@ public class MultiplayerWebSocket {
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
       App.userUsernameMap.remove(user);
-      //App.updateOnlineUsers();
+      App.updateOnlineUsers();
     }
 
     @OnWebSocketMessage
     public void onMessage(Session user, String message){
+        Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/trivia", "root", "root");
+        JSONObject obj = new JSONObject(message);
+        String description = new String(obj.getString("message"));
+        if(description.equals("connect")){
+            User u = UserService.getUser(obj.getInt("id"));
+            App.userUsernameMap.put(user,u);
+            Base.close();
+            App.updateOnlineUsers();
+        }
     }
 }
