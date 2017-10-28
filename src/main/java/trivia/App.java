@@ -59,20 +59,26 @@ public class App{
 
     get("/userInfo", "application/json", UserController::getUserInfo);
 
+    get("/deleteGame", (req,res)->{
+      Integer id = new Integer(req.queryParams("id"));
+      Game game = GameService.getGame(id);
+      game.delete();
+      System.out.println("ID DEL JUEGO A BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+id);
+      
+      return id;
+    });
   }
 
      //Sends a message from one user to all users, along with a list of current usernames
-    public static void broadcastMessage(String message) {
-        userUsernameMap.keySet().stream().filter(Session::isOpen).forEach(session -> {
-            try {
-                session.getRemote().sendString(String.valueOf(new JSONObject()
-                    .put("msg",message)
-                    .put("userlist",generateJsonArray(userUsernameMap.values()))
-                ));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+    public static void broadcastMessage(Integer rivalID) {
+        Session rival = getKeyByValue(userUsernameMap, User.findById(rivalID));
+        try {
+          rival.getRemote().sendString(String.valueOf(new JSONObject()
+            .put("msg","UpdateTurn")
+            ));
+          } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static JSONArray generateJsonArray(Collection<User> c){
@@ -96,4 +102,13 @@ public class App{
           }
       });
     }
-}
+
+    private static Session getKeyByValue(Map<Session,User> map, User user){
+     for (Map.Entry<Session, User> entry : map.entrySet()) {
+        if (user.getInteger("id").equals((entry.getValue()).getInteger("id"))) {
+            return entry.getKey();
+        }
+      }
+      return null;
+    }
+  }

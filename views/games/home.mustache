@@ -57,6 +57,23 @@
 					{{/games}}
 				</ul>
 		</div>
+		<h4>Lista Juegos finalizados</h4>
+		<div class="bloque2">
+				<ul>
+					{{#finalizedGames}}
+					<div class="cajas">
+						<li> 
+							<h3>Juego:{{state}}</h3> 
+							<form action="/finalizedGame" method="get">
+								<input class="jugar" type="submit" value="Ver">
+							</form>
+								<input type="hidden" name="game_id" value="{{id}}">
+								<input class="jugar" type="submit" onclick="deleteGame({{id}})" value="X">
+						</li>
+					</div>
+					{{/finalizedGames}}
+				</ul>
+		</div>
 		<input id="userid" type="hidden" name="userid" value="{{user_id}}">
 	</div>
     <script src="websocketDemo.js"></script>

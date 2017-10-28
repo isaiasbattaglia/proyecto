@@ -15,7 +15,9 @@ public class GameController{
 		Integer id = req.session().attribute("userID");
 		User actualUser = UserService.getUser(id);
     List<Game> games = GameService.getGames(id);
-	  map.put("games", games);  
+    List<Game> finalizedGames = GameService.getFinalizedGames(id);
+	  map.put("games", games);
+    map.put("finalizedGames", finalizedGames);  
  		map.put("lives",actualUser.getLives());
   	map.put("level",actualUser.getLevel());
   	return new ModelAndView(map,"./views/games/home.mustache");
@@ -81,11 +83,47 @@ public class GameController{
     Map map = new HashMap();
     Integer userID = (req.session().attribute("userID"));
     Integer gameID = Integer.parseInt(req.queryParams("game_id"));
+    Integer userIDwin = GameService.getUserWinner(gameID);
     Game game = GameService.getGame(gameID);
     User actualUser = UserService.getUser(userID);
-    map.put("user",actualUser.get("username"));
-    map.put("Co_ans",game.get("questions_Correct"));
-    map.put("In_ans",game.get("questions_Incorrect"));
+    if(GameService.isPlayerOne(gameID,userID)){
+      if(userIDwin.compareTo(-1)==0){
+        map.put("draw",true);
+        map.put("win",false);
+        map.put("lose",false);
+      }
+      else if(userID.compareTo(userIDwin)==0){
+        map.put("draw",false);
+        
+        map.put("win",true);
+        map.put("lose",false);
+      }
+      else{
+        map.put("draw",false);
+        map.put("win",false);
+        map.put("lose",true);
+      }
+    }
+    else{
+      if(userIDwin.compareTo(-1)==0){
+        map.put("draw",true);
+        map.put("win",false);
+        map.put("lose",false);
+      }
+      else if(userID.compareTo(userIDwin)==0){
+        map.put("draw",false);
+        map.put("win",true);
+        map.put("lose",false);
+      }
+      else{
+        map.put("draw",false);
+        map.put("win",false);
+        map.put("lose",true);
+      }
+    }
+      map.put("user",actualUser.getUsername());
+      map.put("Co_ans",game.getQuestionsCorrect2());
+      map.put("In_ans",game.getQuestionsIncorrect2());
     return new ModelAndView(map, "./views/games/finalizedGame.mustache");
   }
   public static ModelAndView waitingRoom(Request req, Response res){

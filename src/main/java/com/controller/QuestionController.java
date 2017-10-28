@@ -33,11 +33,11 @@ public class QuestionController{
     Integer questionID = Integer.parseInt(req.queryParams("question_id"));
     Question currentQuestion = QuestionService.getQuestion(questionID);
 
-    Integer userID = req.session().attribute("user");
+    Integer userID = req.session().attribute("userID");
     Integer gameID = Integer.parseInt(req.queryParams("game_id"));
     
-    Game currentGame = GameService.getGame(gameID);
-    currentGame.setRound(currentGame.getRound()+1);
+    //Game currentGame = GameService.getGame(gameID);
+    //currentGame.setRound(currentGame.getRound()+1);
 
     if(userAnswer.equals(currentQuestion.getAnswer1()))
       return correctAnswer(req, userID, gameID);
@@ -48,14 +48,25 @@ public class QuestionController{
 
   private static ModelAndView correctAnswer(Request req, Integer userID, Integer gameID){
     UserService.updateProfile(UserService.getUser(userID), true);
-    GameService.updateGame(GameService.getGame(gameID),true);
     updateLives(req, userID);
+    if (GameService.isPlayerOne(gameID,userID))
+      GameService.updateGame(GameService.getGame(gameID),true,true);
+    else
+      GameService.updateGame(GameService.getGame(gameID),true,false);
     return checkLastRound(req,gameID,true);
   }
 
   private static ModelAndView wrongAnswer(Request req, Integer userID, Integer gameID){
     UserService.updateProfile(UserService.getUser(userID), false);
-    GameService.updateGame(GameService.getGame(gameID),false);
+    if (GameService.isPlayerOne(gameID,userID))
+      GameService.updateGame(GameService.getGame(gameID),false,true);
+    else
+      GameService.updateGame(GameService.getGame(gameID),false,false);
+    
+    Game currentGame = GameService.getGame(gameID);
+    currentGame.setRound(currentGame.getRound()+1);
+    User rival= GameService.getRival(gameID,userID);
+    App.broadcastMessage(rival.getInteger("id"));
     return checkLastRound(req,gameID,false);
   }
 
@@ -78,7 +89,7 @@ public class QuestionController{
     Map map = new HashMap();
     Game game = GameService.getGame(gameID);
     if(game.getRound().compareTo(game.getTotalRounds())==0){
-      game.setState("finalizado");
+      game.setState("Finalized");
       map.put("final",true);
       map.put("no_final",false);
     }
