@@ -34,5 +34,10 @@ public class MultiplayerWebSocket {
             Base.close();
             App.updateOnlineUsers();
         }
+        else if (description.equals("newGame")) {
+            GameService.createGame(obj.getInt("user1ID"),obj.getInt("user2ID"));
+            Base.close();
+            //App.broadcastMessage("Nuevo_Juego",obj.getInt("user1ID"));
+        }
     }
 }

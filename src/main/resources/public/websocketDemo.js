@@ -27,6 +27,17 @@ function getUserInfo() {
     });
 }
 
+function deletee(id) {
+    $.ajax({
+        type: "get",
+        url: "/deleteGame?id="+id,
+        async: false,
+        success : function() {
+            location.reload();
+        }
+    });
+}
+
 //Send a message if it's not empty, then clear the input field
 function sendMessage(message) {
     if (message !== "") {
@@ -37,12 +48,19 @@ function sendMessage(message) {
 
 function updateChat(msg) {
     var data = JSON.parse(msg.data);
-    id("userlist").innerHTML = "";
-    data.userlist.forEach(function (user) {
-        var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="play(this.value)">Play</buton></li>`;
-        var form = `<form action="/1v1Mode" method="get">${input}</form>`;
-        insert("userlist", form); 
-    });
+    //id("userlist").innerHTML = "";
+    console.log(data.msg=="UpdateTurn");
+    console.log(data.userID);
+    if(data.msg=="UpdateTurn")
+        location.reload();
+    else{
+        id("userlist").innerHTML = "";
+        data.userlist.forEach(function (user) {
+            var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="play(this.value)">Play</buton></li>`;
+            var form = `<form action="/play" method="get">${input}</form>`;
+            insert("userlist", form); 
+        });
+    }
 }
 
 function play(rivalID){
@@ -69,5 +87,10 @@ function sendUserInfo(){
     console.log(jsonString);
     console.log(jsonObj);
     webSocket.send(jsonString); 
+}
+
+
+function deleteGame(id){
+    deletee(id);
 }
 
