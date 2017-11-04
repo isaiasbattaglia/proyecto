@@ -14,4 +14,9 @@ public class CategoryService{
   	return Category.findById(id);
   }
 
+  public static Integer getCategoryId(String name){
+  	Category category = Category.findFirst("tCategory=?",name);
+  	return category.getCategoryId();
+  }
+
 }

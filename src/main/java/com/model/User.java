@@ -13,7 +13,7 @@ public class User extends Model {
     validatePresenceOf("username").message("Please, provide your username");
     validatePresenceOf("password").message("Please, provide your password");
     validatePresenceOf("email").message("please, provide your email");
-    validatePresenceOf("lives").message("Initialize lives");
+    validatePresenceOf("lifes").message("Initialize lifes");
     validatePresenceOf("total_points").message("Initialize total points");
     validatePresenceOf("correct_questions").message("Initialize correct_questions");
     validatePresenceOf("incorrect_questions").message("Initialize incorrect_questions");
@@ -35,7 +35,7 @@ public class User extends Model {
     validatePresenceOf("username").message("Please, provide your username");
     validatePresenceOf("password").message("Please, provide your username");
     validatePresenceOf("email").message("please, provide your email");
-    validatePresenceOf("lives").message("Initialize lives");
+    validatePresenceOf("lifes").message("Initialize lifes");
     validatePresenceOf("total_points").message("Initialize total points");
     validatePresenceOf("correct_questions").message("Initialize correct_questions");
     validatePresenceOf("incorrect_questions").message("Initialize incorrect_questions");
@@ -44,7 +44,7 @@ public class User extends Model {
     set("username", username);
     set("email",email);
     set("password",password);
-    set("lives",3);
+    set("lifes",3);
     set("total_points",0);
     set("level",1);
     set("correct_questions",0);
@@ -62,8 +62,8 @@ public class User extends Model {
   public void setPassword(String password)
   {set("password",password).saveIt();}
 
-  public void setLives(Integer newLives)
-  {set("lives",newLives).saveIt();}
+  public void setLifes(Integer newlifes)
+  {set("lifes",newlifes).saveIt();}
 
   public void setTotalPoints(Integer tpoints)
   {set("total_points", tpoints).saveIt();}
@@ -89,8 +89,8 @@ public class User extends Model {
   public String getPassword()
   {return (String) get("password");}
   
-  public Integer getLives()
-  {return (Integer) get("lives");}
+  public Integer getLifes()
+  {return (Integer) get("lifes");}
 
   public Integer getTotalPoints()
   {return (Integer) get("total_points");}

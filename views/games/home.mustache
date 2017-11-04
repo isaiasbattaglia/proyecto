@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="css/gameHome.css">
 	<script src="/js/jquery.js"></script>
 </head>
-<body>
+<body id="gameHome">
 	<table class="menu">
 		<tl>
 			<td>
@@ -28,7 +28,7 @@
 	<div class="bloque">
 		<div class="lives">
 			<img src="img/vidas.png" width="30">
-			<p> Vidas: {{lives}} </p>
+			<p> Vidas: {{lifes}} </p>
 		</div>
 		<div class="level">
 			<img src="img/win.png" width="30">
@@ -66,8 +66,8 @@
 							<h3>Juego:{{state}}</h3> 
 							<form action="/finalizedGame" method="get">
 								<input class="jugar" type="submit" value="Ver">
-							</form>
 								<input type="hidden" name="game_id" value="{{id}}">
+							</form>
 								<input class="jugar" type="submit" onclick="deleteGame({{id}})" value="X">
 						</li>
 					</div>

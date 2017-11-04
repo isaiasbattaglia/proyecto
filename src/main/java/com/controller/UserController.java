@@ -81,7 +81,7 @@ public class UserController{
 		Map data = new HashMap();
 		Integer userID = (req.session().attribute("userID"));
 		User actualUser = UserService.getUser(userID);
-		data.put("lifes",actualUser.getLives());
+		data.put("lifes",actualUser.getLifes());
 		data.put("Total_Points",actualUser.getTotalPoints());
 		data.put("correct_questions",actualUser.getCorrectQuestions());
 		data.put("incorrect_questions",actualUser.getIncorrectQuestions());  
