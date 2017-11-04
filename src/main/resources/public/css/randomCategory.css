@@ -86,3 +86,12 @@ p{
 	font-family: "Mikado";
 	font-size: 20px;
 }
+
+.categoryButton{
+		width: 50%;
+	background: rgba(0,0,0,.3);
+	margin: 40px;
+	border-radius: 20px;
+	position: relative;
+		left: 20%;
+}

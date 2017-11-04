@@ -30,8 +30,8 @@ public class GameTest{
     u.set("username","matias");
     u.set("password","cabj");
     u.set("email","maty@cabj.com");
-    u.set("lives", 3);
-    u.set("lives", 3);
+    u.set("lifes", 3);
+    u.set("lifes", 3);
     u.set("total_points",0);
     u.set("correct_questions",0);
     u.set("incorrect_questions",0);
@@ -71,8 +71,8 @@ public class GameTest{
     u.set("username","matias");
     u.set("password","cabj");
     u.set("email","maty@cabj.com");
-    u.set("lives", 3);
-    u.set("lives", 3);
+    u.set("lifes", 3);
+    u.set("lifes", 3);
     u.set("total_points",0);
     u.set("correct_questions",0);
     u.set("incorrect_questions",0);
@@ -112,8 +112,8 @@ public class GameTest{
     u.set("username","matias");
     u.set("password","cabj");
     u.set("email","maty@cabj.com");
-    u.set("lives", 3);
-    u.set("lives", 3);
+    u.set("lifes", 3);
+    u.set("lifes", 3);
     u.set("total_points",0);
     u.set("correct_questions",0);
     u.set("incorrect_questions",0);
@@ -147,8 +147,8 @@ public class GameTest{
     u.set("username","matias");
     u.set("password","cabj");
     u.set("email","maty@cabj.com");
-    u.set("lives", 3);
-    u.set("lives", 3);
+    u.set("lifes", 3);
+    u.set("lifes", 3);
     u.set("total_points",0);
     u.set("correct_questions",0);
     u.set("incorrect_questions",0);
@@ -158,9 +158,9 @@ public class GameTest{
     Object id_O = u.getId();
     Long id = Long.parseLong(id_O.toString());
     Game game = new Game(id);
-    System.out.println(u.get("lives"));
+    System.out.println(u.get("lifes"));
     game.saveIt();
-    assertEquals((((Integer)u.get("lives")).compareTo(new Integer(2)))==0,true);    
+    assertEquals((((Integer)u.get("lifes")).compareTo(new Integer(2)))==0,true);    
   }*/ 
   
 //}
@@ -170,8 +170,8 @@ public class GameTest{
   **/
  /* public void play(Category c, Question q){
     User user = this.parent(User.class);
-    if(!(this.get("state").equals("finalizado")) && (Integer)user.get("lives")>0){
-      user.set("lives",(Integer)user.get("lives")-1).saveIt();
+    if(!(this.get("state").equals("finalizado")) && (Integer)user.get("lifes")>0){
+      user.set("lifes",(Integer)user.get("lifes")-1).saveIt();
       boolean valid = true;
       while(valid && (Integer)this.get("round")<5){ 
         this.add(category);

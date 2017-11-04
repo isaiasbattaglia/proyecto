@@ -62,9 +62,7 @@ public class App{
     get("/deleteGame", (req,res)->{
       Integer id = new Integer(req.queryParams("id"));
       Game game = GameService.getGame(id);
-      game.delete();
-      System.out.println("ID DEL JUEGO A BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+id);
-      
+      game.delete();      
       return id;
     });
   }

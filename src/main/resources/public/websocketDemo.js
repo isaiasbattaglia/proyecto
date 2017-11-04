@@ -12,7 +12,7 @@ function Game(user1ID,user2ID,message){
 
 var example;
 var game;
-var user;
+var currentUserID;
 var count=0;
 
 function getUserInfo() {
@@ -21,8 +21,8 @@ function getUserInfo() {
         url: "/userInfo",
         async: false,
         success : function(userInfo) {
-            user = userInfo.id;
-            console.log(user);
+            currentUserID = userInfo.id;
+            console.log(currentUserID);
         }
     });
 }
@@ -47,24 +47,29 @@ function sendMessage(message) {
 }
 
 function updateChat(msg) {
-    var data = JSON.parse(msg.data);
-    //id("userlist").innerHTML = "";
-    console.log(data.msg=="UpdateTurn");
-    console.log(data.userID);
-    if(data.msg=="UpdateTurn")
+  var data = JSON.parse(msg.data);
+  //id("userlist").innerHTML = "";
+  console.log(data.msg=="UpdateTurn");
+  console.log(data.userID);
+  if(data.msg=="UpdateTurn"){
+    if(document.getElementById("gameHome")!=null){
         location.reload();
-    else{
-        id("userlist").innerHTML = "";
-        data.userlist.forEach(function (user) {
-            var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="play(this.value)">Play</buton></li>`;
-            var form = `<form action="/play" method="get">${input}</form>`;
-            insert("userlist", form); 
-        });
     }
+  }
+  else{
+    id("userlist").innerHTML = "";
+    data.userlist.forEach(function (user) {
+        if(user.id!=currentUserID){
+          var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="play(this.value)">Play</buton></li>`;
+          var form = `<form action="/play" method="get">${input}</form>`;
+          insert("userlist", form); 
+        }
+    });
+  }
 }
 
 function play(rivalID){
-    game = new Game(user,rivalID,"newGame");
+    game = new Game(currentUserID,rivalID,"newGame");
     var jsonString = JSON.stringify(game);
     webSocket.send(jsonString);
 }
@@ -81,7 +86,7 @@ function id(id) {
 
 function sendUserInfo(){
     getUserInfo();
-    var jsonObj = {"id": user, "message":"connect"};
+    var jsonObj = {"id": currentUserID, "message":"connect"};
     var jsonString = JSON.stringify(jsonObj);
     console.log("Into sendUserInfo");
     console.log(jsonString);
@@ -93,4 +98,6 @@ function sendUserInfo(){
 function deleteGame(id){
     deletee(id);
 }
+
+
 

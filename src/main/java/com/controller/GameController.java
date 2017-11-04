@@ -18,7 +18,7 @@ public class GameController{
     List<Game> finalizedGames = GameService.getFinalizedGames(id);
 	  map.put("games", games);
     map.put("finalizedGames", finalizedGames);  
- 		map.put("lives",actualUser.getLives());
+ 		map.put("lifes",actualUser.getLifes());
   	map.put("level",actualUser.getLevel());
   	return new ModelAndView(map,"./views/games/home.mustache");
   }
@@ -28,7 +28,7 @@ public class GameController{
 		Integer userID = req.session().attribute("userID");
 		User actualUser = UserService.getUser(userID);
 
-    if (actualUser.getLives().compareTo(0)>0){
+    if (actualUser.getLifes().compareTo(0)>0){
 			Game game = GameService.createGame(userID);
       Integer gameID = game.getGameId();
       res.redirect ("/play"); //PREGUNTAR!!
@@ -39,8 +39,8 @@ public class GameController{
     else{
     	List<Game> games = GameService.getGames(userID);
   		map.put("games",games);
-      map.put("lives",actualUser.get("lives"));
-      map.put("level",actualUser.get("level"));
+      map.put("lifes",actualUser.getLifes());
+      map.put("level",actualUser.getLevel());
       map.put("error","No posee mas vidas para seguir jugando");
       return new ModelAndView(map,"./views/games/home.mustache");
     }
@@ -85,47 +85,34 @@ public class GameController{
     Integer gameID = Integer.parseInt(req.queryParams("game_id"));
     Integer userIDwin = GameService.getUserWinner(gameID);
     Game game = GameService.getGame(gameID);
-    User actualUser = UserService.getUser(userID);
-    if(GameService.isPlayerOne(gameID,userID)){
-      if(userIDwin.compareTo(-1)==0){
-        map.put("draw",true);
-        map.put("win",false);
-        map.put("lose",false);
-      }
-      else if(userID.compareTo(userIDwin)==0){
-        map.put("draw",false);
-        
-        map.put("win",true);
-        map.put("lose",false);
-      }
-      else{
-        map.put("draw",false);
-        map.put("win",false);
-        map.put("lose",true);
-      }
-    }
-    else{
-      if(userIDwin.compareTo(-1)==0){
-        map.put("draw",true);
-        map.put("win",false);
-        map.put("lose",false);
-      }
-      else if(userID.compareTo(userIDwin)==0){
-        map.put("draw",false);
-        map.put("win",true);
-        map.put("lose",false);
-      }
-      else{
-        map.put("draw",false);
-        map.put("win",false);
-        map.put("lose",true);
-      }
-    }
-      map.put("user",actualUser.getUsername());
-      map.put("Co_ans",game.getQuestionsCorrect2());
-      map.put("In_ans",game.getQuestionsIncorrect2());
+
+    if(GameService.isPlayerOne(gameID,userID))
+      putInMapFinalResults(map,userIDwin,userID,true,game);
+    else
+      putInMapFinalResults(map, userIDwin,userID,false,game);
+
     return new ModelAndView(map, "./views/games/finalizedGame.mustache");
   }
+
+  private static void putInMapFinalResults(Map map, Integer userIDwin, Integer userID, boolean player1,Game game){
+    User currentUser = User.findById(userID);
+    map.put("user",currentUser.getUsername());   
+    if(userIDwin.compareTo(-1)==0)
+      map.put("draw",true);
+    else if(userID.compareTo(userIDwin)==0)
+      map.put("win",true);
+    else
+      map.put("lose",true);
+    if(player1){
+      map.put("Co_ans",game.getQuestionsCorrect1());
+      map.put("In_ans",game.getQuestionsIncorrect1());   
+    }
+    else{
+      map.put("Co_ans",game.getQuestionsCorrect2());
+      map.put("In_ans",game.getQuestionsIncorrect2());       
+    }
+  }
+
   public static ModelAndView waitingRoom(Request req, Response res){
     return new ModelAndView(new HashMap(), "./views/games/waitingRoom.html");
   }

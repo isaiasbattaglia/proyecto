@@ -32,7 +32,7 @@ public class Game extends Model {
     set("wrong_questions1",0);
     saveIt();
     User user = this.parent(User.class);
-    user.set("lives",user.getLives()-1).saveIt();
+    user.set("lifes",user.getLifes()-1).saveIt();
   }
 
     public Game(Integer user1_id, Integer user2_id){
@@ -44,12 +44,12 @@ public class Game extends Model {
     set("user1_id",user1_id);
     set("user2_id",user2_id);
     set("state","Turn1");
-    set("history1",0);
-    set("geografy1",0);
-    set("sports1",0);
-    set("entreteniment1",0);
-    set("art1",0);
-    set("science1",0);
+    set("historia",0);
+    set("geografia",0);
+    set("Deportes",0);
+    set("entretenimiento",0);
+    set("arte",0);
+    set("ciencia",0);
     set("amount_of_categories1",0);
     set("amount_of_categories2",0);
     set("correct_questions1",0);
@@ -58,7 +58,7 @@ public class Game extends Model {
     set("wrong_questions2",0);
     saveIt();
     User user = this.parent(User.class);  //Get user1
-    user.set("lives",user.getLives()-1).saveIt();
+    user.set("lifes",user.getLifes()-1).saveIt();
   }
 
   public void setRound(Integer round){
@@ -133,6 +133,32 @@ public class Game extends Model {
     return getInteger("id");
   }
 
+  public Integer getCurrentWinnerOfCategory(String name){
+    return (Integer)get(name);
+  }
+
+  public void setNewWinnerOfCategory(String name, Integer newWinner){
+    set(name,newWinner).saveIt();
+  }
+
+  public Integer getHistory(){
+    return (Integer)get("historia");
+  }
+  public Integer getGeografy(){
+    return (Integer)get("geografia");
+  }
+  public Integer getArt(){
+    return (Integer)get("arte");
+  }
+  public Integer getScience(){
+    return (Integer)get("ciencia");
+  }
+  public Integer getEntreteniment(){
+    return (Integer)get("entretenimiento");
+  }
+  public Integer getSports(){
+    return (Integer)get("deportes");
+  }
   /**
   *Metodo que permite rendirse durante una partida
   **/

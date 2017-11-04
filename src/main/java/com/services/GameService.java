@@ -1,5 +1,6 @@
 package trivia;
 import java.util.List;
+import java.util.ArrayList;
 
 public class GameService{
 	
@@ -36,13 +37,7 @@ public class GameService{
         game.setQuestionsCorrect1(game.getQuestionsCorrect1()+1);
       else{ 
         game.setQuestionsIncorrect1(game.getQuestionsIncorrect1()+1);
-        String currentState= game.getState();
-        if (currentState.equals("Turn1")) {
-          game.setState("Turn2");
-        }
-        else if (currentState.equals("Turn2")) {
-          game.setState("Turn1");
-        }
+        changeTurn(isPlayerOne,game);
       }
     }
     else{
@@ -50,14 +45,18 @@ public class GameService{
         game.setQuestionsCorrect2(game.getQuestionsCorrect2()+1);
       else{
         game.setQuestionsIncorrect2(game.getQuestionsIncorrect2()+1);
-        String currentState= game.getState();
-        if (currentState.equals("Turn1")) {
-          game.setState("Turn2");
-        }
-        else if (currentState.equals("Turn2")) {
-          game.setState("Turn1");
-        } 
+        changeTurn(isPlayerOne,game);
       }
+    }
+  }
+
+  private static void changeTurn(boolean playerOne, Game game){
+    String currentState= game.getState();
+    if (currentState.equals("Turn1")) {
+      game.setState("Turn2");
+    }
+    else if (currentState.equals("Turn2")) {
+      game.setState("Turn1");
     }
   }
 
@@ -101,5 +100,83 @@ public class GameService{
       return game.getUser1Id();
     else
       return game.getUser2Id();
+  }
+
+  public static List<String> getMissingCategories(Integer userID, Integer gameID){
+    if(isPlayerOne(gameID,userID))
+      return generateList(gameID,2);      
+    else
+      return generateList(gameID,1);      
+  }
+
+  private static List<String> generateList(Integer gameID, Integer missingCartegories){
+    Game game = getGame(gameID);
+    List<String> lst = new ArrayList<String>();
+    if (game.getHistory().compareTo(missingCartegories)==0 || game.getHistory().compareTo(0)==0)
+      lst.add("Historia");
+    if (game.getSports().compareTo(missingCartegories)==0 || game.getSports().compareTo(0)==0)
+      lst.add("Deportes");
+    if (game.getGeografy().compareTo(missingCartegories)==0 || game.getGeografy().compareTo(0)==0)
+      lst.add("Geografia");
+    if (game.getEntreteniment().compareTo(missingCartegories)==0 || game.getEntreteniment().compareTo(0)==0)
+      lst.add("Entretenimiento");
+    if (game.getArt().compareTo(missingCartegories)==0 || game.getArt().compareTo(0)==0)
+      lst.add("Arte");
+    if (game.getScience().compareTo(missingCartegories)==0 || game.getScience().compareTo(0)==0)
+      lst.add("Ciencia");
+    return lst;
+  }
+
+  /**
+   * This method allows set in game table a new winner of a category.
+   * @param QuestionID the id of the question answered by the user.
+   * @param GameID the id of the game where user plays.
+   * @param ChooseCategory indicate if an user choosed a category or not.
+   * @param playerOne true iff user is a player 1 in game.
+   * @pre. true.
+   * @post. database updated with the new winner of category.
+  */
+  public static void winACategory(Integer questionID, Integer gameID, boolean chooseCategory, boolean playerOne){
+    if(chooseCategory){
+      Question question = Question.findById(questionID);
+      Category category = question.getCategory();
+      String categoryName = category.getTCategory();
+      if(playerOne)
+        newWinnerOfCategory(categoryName, gameID,true);
+      else
+        newWinnerOfCategory(categoryName, gameID, false);
+    }
+  }
+
+  /**
+   * This method returns the current winner of a category given in the game.
+   * @param name name of category.
+   * @param GameID the id of the game where user plays.
+   * @pre. true.
+   * @return an integer value, representing current winner of category
+   * this value is 1 if player 1 is the winner, 2 if the player 2 is the winner and 3 if both are the winners.
+   * @post. an integer value, representing current winner of category, is returned.
+  */
+  private static Integer currentWinnerOfCategory(String name, Integer gameID)
+    {return (getGame(gameID)).getCurrentWinnerOfCategory(name);}
+
+  /**
+   * This method is a support of a winACategory method, allows set in game table a new winner of a category.
+   * @param CategoryName name of category wich user won.
+   * @param GameID the id of the game where user plays.
+   * @param playerOne true iff user is a player 1 in game.
+   * @pre. true.
+   * @post. database updated with the new winner of category.
+  */
+  private static void newWinnerOfCategory(String categoryName, Integer gameID, boolean playerOne){
+    Integer currentWinnerOfCategory = (getGame(gameID)).getCurrentWinnerOfCategory(categoryName);
+    if(currentWinnerOfCategory.compareTo(2)==0 || currentWinnerOfCategory.compareTo(1)==0)
+        getGame(gameID).setNewWinnerOfCategory(categoryName,3); //Significates a draw
+    else{
+      if(playerOne) 
+        getGame(gameID).setNewWinnerOfCategory(categoryName,1); 
+      else
+        getGame(gameID).setNewWinnerOfCategory(categoryName,2); 
+    }
   }
 }
