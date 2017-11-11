@@ -4,6 +4,9 @@ CREATE TABLE games (
   user1_id INT(11),
   user2_id INT(11),
   state ENUM('Turn1','Turn2','Finalized'),
+  mode ENUM('Turn','Duel'),
+  user1_Answer VARCHAR(150),
+  user2_Answer VARCHAR(150),
   deleteBy Int,
   Historia INT,
   Geografia INT,
@@ -18,6 +21,7 @@ CREATE TABLE games (
   wrong_questions1 INT,
   correct_questions2 INT,
   wrong_questions2 INT,
+  currentQuestion VARCHAR(150),
   created_at DATETIME,
   updated_at DATETIME
 )ENGINE=InnoDB;

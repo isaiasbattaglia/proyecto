@@ -19,8 +19,12 @@ public class MultiplayerWebSocket {
 
     @OnWebSocketClose
     public void onClose(Session user, int statusCode, String reason) {
+      User currentUser = App.userUsernameMap.get(user);
+      App.usersInDuelLobby.remove(user);
+      App.leaveTheGame(currentUser);
+      App.updateOnlineUsers("updateOnlineUsers");
       App.userUsernameMap.remove(user);
-      App.updateOnlineUsers();
+      App.updateOnlineUsers("updateUsersForDuel");
     }
 
     @OnWebSocketMessage
@@ -32,12 +36,54 @@ public class MultiplayerWebSocket {
             User u = UserService.getUser(obj.getInt("id"));
             App.userUsernameMap.put(user,u);
             Base.close();
-            App.updateOnlineUsers();
+            App.updateOnlineUsers("updateOnlineUsers");
         }
-        else if (description.equals("newGame")) {
+        if (description.equals("newGame")) {
             GameService.createGame(obj.getInt("user1ID"),obj.getInt("user2ID"));
             Base.close();
-            //App.broadcastMessage("Nuevo_Juego",obj.getInt("user1ID"));
         }
+        if(description.equals("GameRequest")){
+            User user1 = User.findById(obj.getInt("id"));
+            User user2 = User.findById(obj.getInt("rivalID"));
+            Session u1 = App.getKeyByValue(App.usersInDuelLobby,user1);
+            Session u2 = App.getKeyByValue(App.usersInDuelLobby,user2);
+            App.usersInDuelLobby.remove(u1);
+            App.usersInDuelLobby.remove(u2);
+            Base.close();
+            App.sendGameReq(obj.getInt("id"),obj.getInt("rivalID"));
+            App.updateOnlineUsers("updateUsersForDuel");
+        }
+        if(description.equals("ReqAccepted")){
+            Game game = GameService.createDuelGame(obj.getInt("requesterID"),obj.getInt("requestedID"));
+            Base.close();
+            App.updateOnlineUsers("updateUsersForDuel");
+            App.sendQuestion(game.getInteger("id"));
+        }
+        if(description.equals("answered")){
+            GameService.setAnswerForUser(obj.getInt("gameID"), obj.getInt("id"),obj.getString("answer"));
+            Base.close();
+            App.sendResults(obj);
+        }
+        if(description.equals("newQuestion")){
+            Base.close();
+            App.sendQuestion(obj.getInt("gameID"));
+        }
+        if(description.equals("connectInDuelLobby")){
+            User u = UserService.getUser(obj.getInt("id"));
+            App.usersInDuelLobby.put(user,u);
+            App.userUsernameMap.put(user,u);
+            Base.close();
+            App.updateOnlineUsers("updateUsersForDuel");
+            App.updateOnlineUsers("updateOnlineUsers");
+        }
+        if(description.equals("ReqRejected")){
+            Base.close();
+            App.ReqRejected(obj.getInt("requesterID"));
+        }
+        if(description.equals("cancelReq")){
+            Base.close();
+            App.cancelReq(obj.getInt("requesterID"));
+        }
+
     }
 }

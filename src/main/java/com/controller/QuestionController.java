@@ -94,6 +94,8 @@ public class QuestionController{
       req.session().attribute("correct_answer",correct_ans+1);
       if((correct_ans+1)==3){
         actualUser.setLifes(actualUser.getLifes()+1);
+        req.session().removeAttribute("correct_answer");
+        req.session().attribute("correct_answer",0);
         return true;
       }
     }

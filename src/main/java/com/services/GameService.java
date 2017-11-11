@@ -1,6 +1,7 @@
 package trivia;
 import java.util.List;
 import java.util.ArrayList;
+import org.json.JSONObject;
 
 public class GameService{
 	
@@ -177,6 +178,75 @@ public class GameService{
         getGame(gameID).setNewWinnerOfCategory(categoryName,1); 
       else
         getGame(gameID).setNewWinnerOfCategory(categoryName,2); 
+    }
+  }
+
+  public static JSONObject obtainDuelResultsOfUser(Game game, boolean playerOne){
+    JSONObject json = new JSONObject();
+    boolean  draw = game.getQuestionsCorrect1().compareTo(game.getQuestionsCorrect2())==0;
+
+    if(playerOne){
+      boolean  win1 = game.getQuestionsCorrect1().compareTo(game.getQuestionsCorrect2())>0;
+      List<Integer> user1Results = getUserResult(game,true);
+      json.put("win",win1);
+      json.put("correct",user1Results.get(0));
+      json.put("wrong",user1Results.get(1));
+    }
+    else{
+      boolean  win2 = game.getQuestionsCorrect2().compareTo(game.getQuestionsCorrect1())>0;
+      List<Integer> user2Results = getUserResult(game,false);
+      json.put("win",win2);
+      json.put("correct",user2Results.get(0));
+      json.put("wrong",user2Results.get(1));
+    }
+    json.put("msg","showFinalResults");
+    json.put("draw", draw);
+    return json;
+  }
+
+  public static Game createDuelGame(Integer id1, Integer id2){
+    return new Game(id1,id2,"Duel");
+  } 
+  public static void updateDuelGame(Game game, boolean correct, boolean player1){
+    if(player1){
+      if(correct)
+        game.setQuestionsCorrect1(game.getQuestionsCorrect1()+1);
+      else
+        game.setQuestionsIncorrect1(game.getQuestionsIncorrect1()+1);
+    }
+    else{
+     if(correct)
+        game.setQuestionsCorrect2(game.getQuestionsCorrect2()+1);
+      else
+        game.setQuestionsIncorrect2(game.getQuestionsIncorrect2()+1);     
+    }
+  }
+  public static List<Game> getDuelGames(Integer userID){
+    List<Game> l1 = Game.where("user1_id=? and mode=? and state is null",userID,"Duel");
+    List<Game> games2 = Game.where("mode=? and user2_id=? and state is null","Duel",userID);
+    games2.addAll(l1);
+    return games2;
+  }
+
+  public static List<Integer> getUserResult(Game game, boolean player1){
+    List<Integer> list = new ArrayList<Integer>();
+    if(player1){
+      list.add(0,game.getQuestionsCorrect1());
+      list.add(1,game.getQuestionsIncorrect1());
+    }
+    else{
+      list.add(0,game.getQuestionsCorrect2());
+      list.add(1,game.getQuestionsIncorrect2());   
+    }
+    return list;
+  }
+  public static void setAnswerForUser(Integer gameID, Integer id1, String answer){
+    Game game = getGame(gameID);
+    if(isPlayerOne(gameID, id1)){
+      game.setUser1Answer(answer);
+    }
+    else{
+      game.setUser2Answer(answer);
     }
   }
 }
