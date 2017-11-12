@@ -116,5 +116,7 @@ public class GameController{
   public static ModelAndView waitingRoom(Request req, Response res){
     return new ModelAndView(new HashMap(), "./views/games/waitingRoom.html");
   }
-
+  public static ModelAndView fightLobby(Request req, Response res){
+    return new ModelAndView(new HashMap(), "./views/games/playDuel.html");
+  }
 }

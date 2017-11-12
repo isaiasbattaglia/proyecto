@@ -38,6 +38,11 @@
 		<form action="/waitingRoom" method="get">
 			<input class="newGame" id="newGame" type="submit" value="Nuevo Juego">
 		</form>
+
+		<form action="/fightLobby" method="get">
+			<input class="newGame" id="fight" type="submit" onclick="sendDuelInfo()" value="Duelo">
+		</form>
+		
 		<h1>
     		<b><font size="4" color="red">{{error}}</font></b>
   		</h1>

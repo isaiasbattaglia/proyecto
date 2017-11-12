@@ -56,9 +56,26 @@ public class Game extends Model {
     set("wrong_questions1",0);
     set("correct_questions2",0);
     set("wrong_questions2",0);
+    set("mode","Turn");
     saveIt();
     User user = this.parent(User.class);  //Get user1
     user.set("lifes",user.getLifes()-1).saveIt();
+  }
+
+  public Game(Integer user1_id, Integer user2_id, String mode){
+    validatePresenceOf("user1_id").message("Please, provide a user id");
+    validatePresenceOf("correct_questions1").message("Please, initialize correct_questions");
+    validatePresenceOf("wrong_questions1").message("Please, initialize wrong_questions");
+    set("round",0);
+    set("total_rounds",5);
+    set("user1_id",user1_id);
+    set("user2_id",user2_id);
+    set("correct_questions1",0);
+    set("wrong_questions1",0);
+    set("correct_questions2",0);
+    set("wrong_questions2",0);
+    set("mode",mode);
+    saveIt();
   }
 
   public void setRound(Integer round){
@@ -91,6 +108,18 @@ public class Game extends Model {
 
   public void setQuestionsIncorrect2(Integer ic){
     set("wrong_questions2",ic).saveIt();
+  }
+
+  public void setUser1Answer(String answer){
+    set("user1_Answer",answer).saveIt();
+  }
+
+  public void setUser2Answer(String answer){
+    set("user2_Answer",answer).saveIt();
+  }
+
+  public void setCurrentQuestion(String question){
+    set("currentQuestion",question).saveIt();
   }
 
   public Integer getRound(){
@@ -158,6 +187,15 @@ public class Game extends Model {
   }
   public Integer getSports(){
     return (Integer)get("deportes");
+  }
+  public String getUser1Answer(){
+    return (String)get("user1_Answer");
+  }
+  public String getUser2Answer(){
+    return (String)get("user2_Answer");
+  }
+  public String getCurrentQuestion(){
+    return (String) get("currentQuestion");
   }
   /**
   *Metodo que permite rendirse durante una partida
