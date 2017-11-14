@@ -121,6 +121,12 @@ public class Game extends Model {
   public void setCurrentQuestion(String question){
     set("currentQuestion",question).saveIt();
   }
+  public void setAmountOfCategories1(Integer num){
+    set("amount_of_categories1",num).saveIt();
+  }
+  public void setAmountOfCategories2(Integer num){
+    set("amount_of_categories2",num).saveIt();
+  }
 
   public Integer getRound(){
     return (Integer) get("round");
@@ -155,6 +161,12 @@ public class Game extends Model {
 
   public Integer getQuestionsIncorrect2(){
     return (Integer) get("wrong_questions2");
+  }
+  public Integer getAmountOfCategories1(){
+    return (Integer) get("amount_of_categories1");
+  }
+   public Integer getAmountOfCategories2(){
+    return (Integer) get("amount_of_categories2");
   }
 
 
@@ -197,6 +209,10 @@ public class Game extends Model {
   public String getCurrentQuestion(){
     return (String) get("currentQuestion");
   }
+
+
+
+
   /**
   *Metodo que permite rendirse durante una partida
   **/

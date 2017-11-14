@@ -98,10 +98,14 @@ public class QuestionController{
       GameService.winACategory(Integer.parseInt(req.queryParams("question_id")),gameID,chooseCategory,false);
       GameService.updateGame(GameService.getGame(gameID),true,false);
     }
-    if(canChooseCategory)
+    Boolean sixthCategoryReached = GameService.sixthCategoryReached(gameID,GameService.isPlayerOne(gameID,userID));
+    if(sixthCategoryReached){
+      return checkLastRound(req,gameID,true,sixthCategoryReached);
+    }
+    else if(canChooseCategory)
       return chooseCategory(req, gameID);
     else
-      return checkLastRound(req,gameID,true);
+      return checkLastRound(req,gameID,true,sixthCategoryReached);
   }
 
   /**
@@ -126,7 +130,7 @@ public class QuestionController{
     currentGame.setRound(currentGame.getRound()+1);
     User rival= GameService.getRival(gameID,userID);
     App.broadcastMessage(rival.getInteger("id"));
-    return checkLastRound(req,gameID,false);
+    return checkLastRound(req,gameID,false,false);
   }
 
   /**
@@ -158,24 +162,31 @@ public class QuestionController{
   }
 
   /**
-   * This method checks if the last round of the game was reached, and returns correct or wrong answer view as appropiate.
+   * This method checks if the last round of the game was reached, and returns correct or wrong answer view as appropiate
+   * and sends message to rival if the game was finalized.
    * @param req Provides information about the HTTP request.
    * @param gameID id of the game where the user plays.
    * @param correctAnswer a boolean value that indicates if the user answered well or badly.
+   * @param sixthCategoryReached a boolean values that indicates if the user won all six categories.
    * @pre. true.
    * @return a ModelAndWiew that contains a correct answer view if the user answered well,
    * otherwise a ModelAndView contains a wrong answer view.
    * @post. database updated.
   */
-  private static ModelAndView checkLastRound(Request req, Integer gameID, Boolean correctAnswer){
+  private static ModelAndView checkLastRound(Request req, Integer gameID, Boolean correctAnswer, Boolean sixthCategoryReached){
+
     Map map = new HashMap();
     Game game = GameService.getGame(gameID);
-    if(game.getRound().compareTo(game.getTotalRounds())==0){
+    if(sixthCategoryReached || game.getRound().compareTo(game.getTotalRounds())==0){
       game.setState("Finalized");
       map.put("final",true);
+      Integer userID = req.session().attribute("userID");
+      User rival= GameService.getRival(gameID,userID);
+      App.broadcastMessage(rival.getInteger("id"));
     }
     else
       map.put("no_final",true);
+
     if(correctAnswer){
       map.put("correct","Respuesta correcta");
       map.put("game_id",gameID);

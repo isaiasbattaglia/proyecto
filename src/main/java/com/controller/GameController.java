@@ -154,12 +154,12 @@ public class GameController{
     else
       map.put("lose",true);
     if(player1){
-      map.put("Co_ans",game.getQuestionsCorrect1());
-      map.put("In_ans",game.getQuestionsIncorrect1());   
+      map.put("Co_ans",game.getAmountOfCategories1());
+      map.put("In_ans",game.getAmountOfCategories2());   
     }
     else{
-      map.put("Co_ans",game.getQuestionsCorrect2());
-      map.put("In_ans",game.getQuestionsIncorrect2());       
+      map.put("Co_ans",game.getAmountOfCategories2());
+      map.put("In_ans",game.getAmountOfCategories1());       
     }
   }
 

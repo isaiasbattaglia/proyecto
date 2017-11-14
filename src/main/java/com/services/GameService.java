@@ -186,12 +186,12 @@ public class GameService{
   */
   public static Integer getUserWinner(Integer gameID){
     Game game = getGame(gameID);
-    Integer user1Answers = game.getQuestionsCorrect1();
-    Integer user2Answers = game.getQuestionsCorrect2();
-    if(user1Answers.compareTo(user2Answers)==0){
+    Integer user1Categories = game.getAmountOfCategories1();
+    Integer user2Categories = game.getAmountOfCategories2();
+    if(user1Categories.compareTo(user2Categories)==0){
       return -1;
     }
-    else if (user1Answers.compareTo(user2Answers)>0)
+    else if (user1Categories.compareTo(user2Categories)>0)
       return game.getUser1Id();
     else
       return game.getUser2Id();
@@ -283,14 +283,24 @@ public class GameService{
    * @post. database updated with the new winner of category.
   */
   private static void newWinnerOfCategory(String categoryName, Integer gameID, boolean playerOne){
-    Integer currentWinnerOfCategory = (getGame(gameID)).getCurrentWinnerOfCategory(categoryName);
-    if(currentWinnerOfCategory.compareTo(2)==0 || currentWinnerOfCategory.compareTo(1)==0)
-        getGame(gameID).setNewWinnerOfCategory(categoryName,3); //Significates that player1 and player2 won this category,
+    Game game= getGame(gameID);
+    Integer currentWinnerOfCategory = game.getCurrentWinnerOfCategory(categoryName);
+    if(currentWinnerOfCategory.compareTo(2)==0 || currentWinnerOfCategory.compareTo(1)==0){
+        game.setNewWinnerOfCategory(categoryName,3); //Significates that player1 and player2 won this category,
+        if(playerOne)
+          game.setAmountOfCategories1(game.getAmountOfCategories1()+1);
+        else
+          game.setAmountOfCategories2(game.getAmountOfCategories2()+1);
+    }
     else{
-      if(playerOne) 
+      if(playerOne){ 
         getGame(gameID).setNewWinnerOfCategory(categoryName,1); 
-      else
+        game.setAmountOfCategories1(game.getAmountOfCategories1()+1);
+      }
+      else{
         getGame(gameID).setNewWinnerOfCategory(categoryName,2); 
+        game.setAmountOfCategories2(game.getAmountOfCategories2()+1);
+        }
     }
   }
 
@@ -413,4 +423,19 @@ public class GameService{
       game.setUser2Answer(answer);
     }
   }
+
+  /**
+   * This method returns true iff the user won the six categories.
+   * @param gameID id of the game where the user plays.
+   * @param playerOne a boolean value that indicates if the user is player 1.
+   * @pre. true.
+   * @post. a boolean value that indicates if the user won the six categories, is returned.
+  */
+ public static boolean sixthCategoryReached(Integer gameID, boolean playerOne){
+    Game game = Game.findById(gameID);
+    if (playerOne)
+      return game.getAmountOfCategories1().compareTo(6)==0;
+    else
+      return game.getAmountOfCategories2().compareTo(6)==0;
+ }
 }
