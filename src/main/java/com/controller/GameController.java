@@ -10,6 +10,14 @@ import java.util.List;
 
 public class GameController{
 
+   /**
+   * This method returns the game's home view.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. HTTP Session must be initialized.
+   * @return a ModelAndView containing the game's home view.
+   * @post. a ModelAndView containing the game's home view, is returned.
+  */
 	public static ModelAndView gameHome(Request req, Response res){
 		Map map = new HashMap();
 		Integer id = req.session().attribute("userID");
@@ -23,11 +31,17 @@ public class GameController{
   	return new ModelAndView(map,"./views/games/home.mustache");
   }
 
+   /**
+   * This method redirect to a play's view if the user can create a new game
+   * otherwise the game's home view is returned showing the error.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. HTTP Session must be initialized.
+  */
   public static ModelAndView newGame(Request req, Response res){
   	Map map = new HashMap();
 		Integer userID = req.session().attribute("userID");
 		User actualUser = UserService.getUser(userID);
-
     if (actualUser.getLifes().compareTo(0)>0){
 			Game game = GameService.createGame(userID);
       Integer gameID = game.getGameId();
@@ -46,10 +60,17 @@ public class GameController{
     }
   }
 
+   /**
+   * This method returns the random category's view, to allow the user start the game.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. HTTP Session must be initialized.
+   * @return a ModelAndView containing the random category's view.
+   * @post. a ModelAndView containing the random category's view, is returned.
+  */
   public static ModelAndView play(Request req, Response res){
   	Map map = new HashMap();
     Integer userID = req.session().attribute("userID");
-
     Game game = GameService.getLastGame(userID);
   	Integer gameID = (req.queryParams("game_id")==null)? game.getGameId(): Integer.parseInt(req.queryParams("game_id"));
     Category category = CategoryService.randomCategory();
@@ -63,6 +84,15 @@ public class GameController{
     //User actualUser = UserService.getUser(id);
   }
 
+   /**
+   * support method for the play method
+   * This method returns the random category's view, to allow the user start the game.
+   * @param map a Map.
+   * @param tCategory name of the category.
+   * @pre. true.
+   * @return a ModelAndView containing the random category's view.
+   * @post. a ModelAndView containing the random category's view, is returned.
+  */
   public static ModelAndView showRandomCategory(Map map, String tCategory){
     if (tCategory.equals("Historia"))
       map.put("historia",true);
@@ -79,9 +109,18 @@ public class GameController{
     return new ModelAndView (map, "./views/category/randomCategory.mustache");
   }
   
+   /**
+   * This method returns the view when the game ends, showing the final results
+   * depending on whether if the user is player1 or not.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. HTTP Session must be initialized.
+   * @return a ModelAndView containing the view with the final results of the game.
+   * @post. a ModelAndView containing the view with the final results of the game, is returned.
+  */
   public static ModelAndView finalizedGame(Request req, Response res){
     Map map = new HashMap();
-    Integer userID = (req.session().attribute("userID"));
+    Integer userID = req.session().attribute("userID");
     Integer gameID = Integer.parseInt(req.queryParams("game_id"));
     Integer userIDwin = GameService.getUserWinner(gameID);
     Game game = GameService.getGame(gameID);
@@ -94,6 +133,17 @@ public class GameController{
     return new ModelAndView(map, "./views/games/finalizedGame.mustache");
   }
 
+   /**
+   * support method for the finalizedGame method
+   * This method allow put in map a final results of the game for user 1 or user 2 as appropriate
+   * @param map a Map.
+   * @param userIDWin winner user's id.
+   * @param userID current user id.
+   * @param player1 true iff user is a player 1 in game.
+   * @param game game where the user plays.
+   * @pre. true.
+   * @post. database updated.
+  */
   private static void putInMapFinalResults(Map map, Integer userIDwin, Integer userID, boolean player1,Game game){
     User currentUser = User.findById(userID);
     map.put("user",currentUser.getUsername());   
@@ -113,9 +163,26 @@ public class GameController{
     }
   }
 
+   /**
+   * This method returns the waiting room view.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return a ModelAndView containing the waiting room view.
+   * @post. a ModelAndView containing the waiting room view,is returned.
+  */
   public static ModelAndView waitingRoom(Request req, Response res){
     return new ModelAndView(new HashMap(), "./views/games/waitingRoom.html");
   }
+
+   /**
+   * This method returns the fight lobby view.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return a ModelAndView containing the fight lobby view.
+   * @post. a ModelAndView containing the fight lobby view,is returned.
+  */
   public static ModelAndView fightLobby(Request req, Response res){
     return new ModelAndView(new HashMap(), "./views/games/playDuel.html");
   }
