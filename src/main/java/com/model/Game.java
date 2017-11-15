@@ -57,6 +57,8 @@ public class Game extends Model {
     set("correct_questions2",0);
     set("wrong_questions2",0);
     set("mode","Turn");
+    set("deletedByUser1",false);
+    set("deletedByUser2",false);
     saveIt();
     User user = this.parent(User.class);  //Get user1
     user.set("lifes",user.getLifes()-1).saveIt();
@@ -126,6 +128,13 @@ public class Game extends Model {
   }
   public void setAmountOfCategories2(Integer num){
     set("amount_of_categories2",num).saveIt();
+  }
+
+  public void setDeletedByUser1(Boolean delete){
+    set("deletedByUser1",delete).saveIt();
+  }
+  public void setDeletedByUser2(Boolean delete){
+    set("deletedByUser2",delete).saveIt();
   }
 
   public Integer getRound(){
@@ -210,7 +219,12 @@ public class Game extends Model {
     return (String) get("currentQuestion");
   }
 
-
+  public Boolean getDeletedByUser1(){
+    return (Boolean)get("deletedByUser1"); 
+  }
+  public Boolean getDeletedByUser2(){
+    return (Boolean)get("deletedByUser2"); 
+  }
 
 
   /**

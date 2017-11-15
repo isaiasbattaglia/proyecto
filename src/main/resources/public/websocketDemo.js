@@ -30,7 +30,7 @@ function getUserInfo() {
 function deletee(id) {
     $.ajax({
         type: "get",
-        url: "/deleteGame?id="+id,
+        url: "/deleteGame?id="+id+"&uid="+currentUserID,
         async: false,
         success : function() {
             location.reload();
