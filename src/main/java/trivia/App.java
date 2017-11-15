@@ -64,10 +64,14 @@ public class App{
     get("/fightLobby", GameController::fightLobby, new MustacheTemplateEngine());
 
     get("/deleteGame", (req,res)->{
-      Integer id = new Integer(req.queryParams("id"));
-      Game game = GameService.getGame(id);
-      game.delete();      
-      return id;
+      Integer gameID = new Integer(req.queryParams("id"));
+      Integer userID = new Integer(req.queryParams("uid"));
+      Game game = GameService.getGame(gameID);
+      if(GameService.isPlayerOne(gameID,userID))
+        game.setDeletedByUser1(true);
+      else
+        game.setDeletedByUser2(true);
+      return 0;
     });
   }
 

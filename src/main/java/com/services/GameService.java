@@ -20,15 +20,15 @@ public class GameService{
 	}
 
    /**
-   * This method returns a list of the games that the user finalized.
+   * This method returns a list of the games that the user finalized and not delete.
    * @param user_Id a id of the user.
    * @pre. true.
    * @return a list of the games that the user finalized.
    * @post. a list of the games that the user finalized, is returned.
   */
   public static List<Game> getFinalizedGames(Integer user_Id){
-    List<Game> l3= Game.where("user2_id = ? and state=?", user_Id, "Finalized");
-    List<Game> l4= Game.where("user1_id = ? and state=?", user_Id, "Finalized");
+    List<Game> l3= Game.where("user2_id = ? and state=? and deletedByUser2=?", user_Id, "Finalized",false);
+    List<Game> l4= Game.where("user1_id = ? and state=? and deletedByUser1=?", user_Id, "Finalized",false);
     l3.addAll(l4);
     return l3;
   }
