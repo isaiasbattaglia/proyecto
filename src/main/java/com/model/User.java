@@ -4,6 +4,7 @@ import org.javalite.activejdbc.Model;
 import java.util.Map;
 import java.util.HashMap;
 import org.javalite.activejdbc.validation.UniquenessValidator;
+import java.time.LocalTime;
 
 
 
@@ -50,6 +51,8 @@ public class User extends Model {
     set("correct_questions",0);
     set("incorrect_questions",0);
     set("total_questions",0);
+    saveIt();
+    set("last_life_update", get("created_at"));
     saveIt();
   }
 

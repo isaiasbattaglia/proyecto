@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Duel</title>
+  <script src="/js/jquery.js"></script>	
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="nobackbutton();" id="DuelLobby">
+  <div>
+    <p id="message"> <!-- Built by JS --></p>
+    <p id="question"><!-- Built by JS --></p>
+  </div>
+  <div>
+    <form id="options" onsubmit='waiting();return false'> <!-- Built by JS --> </form>
+  </div>
+  <ul id="userlistt"> <!-- Built by JS --> </ul>
+	<button class="negative" name="cancel" id="playOrNot" hidden="hidden"></button>
+
+  <script src="websocketDemo.js"></script>
+</body>
+</html>

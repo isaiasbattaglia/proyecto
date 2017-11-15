@@ -60,6 +60,7 @@ public class Game extends Model {
     saveIt();
     User user = this.parent(User.class);  //Get user1
     user.set("lifes",user.getLifes()-1).saveIt();
+    user.set("last_life_update",user.get("updated_at")).saveIt();
   }
 
   public Game(Integer user1_id, Integer user2_id, String mode){
