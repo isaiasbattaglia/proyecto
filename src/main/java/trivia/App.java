@@ -73,6 +73,11 @@ public class App{
         game.setDeletedByUser2(true);
       return 0;
     });
+
+    get("/getWrongAnswer", (req,res)->{
+      System.out.println(QuestionService.wrongAnswer);
+      return QuestionService.wrongAnswer;
+    });
   }
 
      //Sends a message from one user to all users, along with a list of current usernames

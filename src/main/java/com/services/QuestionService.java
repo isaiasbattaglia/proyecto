@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class QuestionService{
-
+  public static final String wrongAnswer = 
+  "EnCt25825d2e696fa42fbf615e86068852097ae49c4f45825d2e696fa42fbf615e8602JTQhEfkiQGgCI2iDFqHsTNgk2+MIwEmS";
    /**
-   * This method returns a list that contains a answers for a given question in random order.
+   * This method returns a list that contains a answers for a given question in random order,
+   * and the last position contains the wrong Answer that significances that an user not answered in time.
    * @param q a Question.
    * @pre. true.
    * @return a list that contains a answers for a given question in random order.
@@ -19,6 +21,7 @@ public class QuestionService{
     arr.add(2,q.getAnswer3());
     arr.add(3,q.getAnswer4());
     Collections.shuffle(arr);
+    arr.add(4,wrongAnswer);
     return arr;
   }
 

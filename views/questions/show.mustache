@@ -15,12 +15,13 @@
 		<h1>{{Question}}</h1>
 		
 		<div class="bloque2">
+			<p id="timer"> </p>
 			<p>
 				<form action="/answer?answer={{answer1}}" method="post">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+				<input id="chooseCategory" type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
 				<input type="submit" value="{{answer1}}">
-				<input type="hidden" name=question_id value="{{quest.id}}">
-				<input type="hidden" name="game_id" value="{{game_id}}">	
+				<input id="questID" type="hidden" name=question_id value="{{quest.id}}">
+				<input id="gameID" type="hidden" name="game_id" value="{{game_id}}">	
 				</form>
 			</p>
 
@@ -51,13 +52,20 @@
 				</form>
 			</p>	
 
-		</div>
-
+			<p>
+				<form id="wrongAnswer" type="hidden" action="/answer?answer={{answer5}}" method="post">
+				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+				<input type="hidden" name=question_id value="{{quest.id}}">	
+				<input type="hidden" name="game_id" value="{{game_id}}">	
+				</form>
+			</p>
 		<div>
 			<img src="img/pregunta2.png">
 		</div>		
 	</div>
 	<script src="websocketDemo.js"></script>
+	<script src="timeOut.js"></script>
+
 	
 
 </body>
