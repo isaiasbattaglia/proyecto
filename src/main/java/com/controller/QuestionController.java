@@ -37,6 +37,7 @@ public class QuestionController{
       map.put("answer2",answerList.get(1));
       map.put("answer3",answerList.get(2));
       map.put("answer4",answerList.get(3));
+      map.put("answer5",answerList.get(4));
       map.put("quest",question);
       map.put("game_id",req.queryParams("game_id"));
       Boolean chooseCategory = (req.queryParams("chooseCategory")==null)? false : true;

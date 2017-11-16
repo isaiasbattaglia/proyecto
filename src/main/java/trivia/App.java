@@ -84,6 +84,11 @@ public class App{
     post("/newUser", (req,res)->{
       String name = req.queryParams("username");
       return UserService.createAdmin(name);
+
+    get("/getWrongAnswer", (req,res)->{
+      System.out.println(QuestionService.wrongAnswer);
+      return QuestionService.wrongAnswer;
+
     });
   }
 
