@@ -20,6 +20,7 @@ public class GameController{
   */
 	public static ModelAndView gameHome(Request req, Response res){
 		Map map = new HashMap();
+    boolean isAdmin = req.session().attribute("admin");
 		Integer id = req.session().attribute("userID");
 		User actualUser = UserService.getUser(id);
     List<Game> games = GameService.getGames(id);
@@ -28,6 +29,7 @@ public class GameController{
     map.put("finalizedGames", finalizedGames);  
  		map.put("lifes",actualUser.getLifes());
   	map.put("level",actualUser.getLevel());
+    map.put("admin",isAdmin);
   	return new ModelAndView(map,"./views/games/home.mustache");
   }
 

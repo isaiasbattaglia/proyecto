@@ -39,6 +39,16 @@
 			<input class="newGame" id="newGame" type="submit" value="Nuevo Juego">
 		</form>
 
+		{{#admin}}
+		<form action="/createQuestion" method="get">
+			<input class="newGame" id="createQuestion" type="submit" value="Crear Pregunta">
+		</form>
+
+		<form action="/createAdmin" method="get">
+			<input class="newGame" id="createAdmin" type="submit" value="Nuevo administrador">
+		</form>
+		{{/admin}}
+
 		<form action="/fightLobby" method="get">
 			<input class="newGame" id="fight" type="submit" onclick="sendDuelInfo()" value="Duelo">
 		</form>

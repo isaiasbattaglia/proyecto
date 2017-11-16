@@ -76,7 +76,10 @@ public class UserController{
 			else{
 				Integer userID = UserService.getUserId(username,password);
 				User currentUser = UserService.getUser(username,password);
-				createUserSession(req,userID,currentUser.getUsername());
+        if(UserService.isAdmin(userID))
+				  createUserSession(req,userID,currentUser.getUsername(),true);
+        else
+          createUserSession(req,userID,currentUser.getUsername(),false);
 				List<Game> games = GameService.getGames(userID);
 				res.redirect("/games");
 				return new ModelAndView(map,"./views/home.mustache");
@@ -114,11 +117,12 @@ public class UserController{
    * @pre. true.
    * @post. a HTTP Session is created.
   */
-	private static void createUserSession(Request req, Integer id, String username){
+	private static void createUserSession(Request req, Integer id, String username, boolean isAdmin){
 		req.session(true);
 		req.session().attribute("user",username);
 		req.session().attribute("userID",id);
 		req.session().attribute("correct_answer",0); //Sacar
+    req.session().attribute("admin",isAdmin);
 	}
 
   /**
@@ -184,4 +188,8 @@ public class UserController{
 	private static boolean sessionOpen(Request req){
 		return (req.session().attribute("userID")!=null);
 	}
+
+  public static ModelAndView createAdmin(Request req, Response res){
+    return new ModelAndView(new HashMap(), "./views/users/createAdmin.html");
+  }
 }

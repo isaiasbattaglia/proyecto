@@ -63,6 +63,8 @@ public class App{
 
     get("/fightLobby", GameController::fightLobby, new MustacheTemplateEngine());
 
+    get("/createAdmin", UserController::createAdmin, new MustacheTemplateEngine());
+
     get("/deleteGame", (req,res)->{
       Integer gameID = new Integer(req.queryParams("id"));
       Integer userID = new Integer(req.queryParams("uid"));
@@ -72,6 +74,16 @@ public class App{
       else
         game.setDeletedByUser2(true);
       return 0;
+    });
+
+    get("/validateUser", (req,res)->{
+      String name = req.queryParams("username");
+      return UserService.validUser(name);
+    });
+
+    post("/newUser", (req,res)->{
+      String name = req.queryParams("username");
+      return UserService.createAdmin(name);
     });
   }
 

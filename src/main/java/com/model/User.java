@@ -51,6 +51,7 @@ public class User extends Model {
     set("correct_questions",0);
     set("incorrect_questions",0);
     set("total_questions",0);
+    set("admin",false);
     saveIt();
     set("last_life_update", get("created_at"));
     saveIt();
@@ -79,6 +80,9 @@ public class User extends Model {
 
   public void setTotalQuestions(Integer tQuestions)
   {set("total_questions",tQuestions).saveIt();}
+
+  public void setAdmin(boolean isAdmin)
+  {set("admin",isAdmin).saveIt();}
 
   public void setLevel(Integer level)
   {set("level",level).saveIt();}
@@ -115,6 +119,9 @@ public class User extends Model {
 
   public Integer level()
   {return (Integer)this.get("level");}
+
+  public boolean getAdmin()
+  {return (boolean)this.get("admin");}
 
   /**
   *Metodo que retorna todos los juegos que inicio (this) un jugador.
