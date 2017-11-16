@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Create Admin</title>
+  <script src="/js/jquery.js"></script>	
+</head>
+<body id="createAdmin">
+  <div>
+    <h1 id="h1"> Crear nuevo administrador</h1>
+    <p id="message"> <!-- Built by JS --></p>
+  </div>
+  <div>
+    <p id="username"> Usuario: <br>
+      <input id="nickname" type="text" name="nickname"><br>
+      <button class="b2" type="submit" onclick=validateUser()> Crear </button></p>
+
+    <form type="hidden" id="newAdmin"  action="/newAdmin" method="post"> <!-- Built by JS --> </form>
+  </div>
+  <script src="websocketDemo.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

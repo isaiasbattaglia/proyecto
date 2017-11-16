@@ -5,6 +5,7 @@ CREATE TABLE users (
   email	VARCHAR(128),
   lifes INT,
   level INT,
+  admin BOOLEAN,
   total_points 	INT,
   correct_questions INT,
   incorrect_questions INT,

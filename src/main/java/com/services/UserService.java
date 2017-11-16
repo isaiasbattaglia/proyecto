@@ -186,4 +186,23 @@ public class UserService{
   public static List<User> top10(){
     return User.findBySQL("select username, level from users order by level desc limit 10");
   }
+
+  public static boolean isAdmin(Integer userID){
+    return getUser(userID).getAdmin();
+  }
+
+  public static boolean validUser(String username){
+    List<User> users = User.where("username=?",username);
+    return users.size()==1;
+  }
+
+  public static boolean createAdmin(String username){
+    List<User> users = User.where("username=?",username);
+    User u1 = users.get(0);
+    if(u1.getAdmin()==true)
+      return false;
+    else
+      u1.setAdmin(true);
+    return true;
+  }
 }
