@@ -63,6 +63,9 @@ public class App{
 
     get("/fightLobby", GameController::fightLobby, new MustacheTemplateEngine());
 
+    get("/createQuestion", QuestionController::createQuestion, new MustacheTemplateEngine());
+
+
     get("/createAdmin", UserController::createAdmin, new MustacheTemplateEngine());
 
     get("/deleteGame", (req,res)->{
@@ -84,12 +87,28 @@ public class App{
     post("/newUser", (req,res)->{
       String name = req.queryParams("username");
       return UserService.createAdmin(name);
+    });
 
     get("/getWrongAnswer", (req,res)->{
       System.out.println(QuestionService.wrongAnswer);
       return QuestionService.wrongAnswer;
 
     });
+
+    post("/newQuestion", (req,res)->{
+      JSONObject json = new JSONObject(req.queryParams("json"));
+      Integer categoryID = CategoryService.getCategoryId(new String(json.getString("category")));
+      String correct = json.getString("correct");
+      String answer1 = json.getString("answer2");
+      String answer2 = json.getString("answer3");
+      String answer3 = json.getString("answer4");
+      String quest= json.getString("question");
+      System.out.println(correct+answer1+answer2+answer3+quest);
+      Question question = new Question(new String(json.getString("question")),new String(json.getString("correct")),new String(json.getString("answer2")),
+        new String(json.getString("answer3")),new String(json.getString("answer4")),categoryID);
+      return 0;
+    });
+
   }
 
      //Sends a message from one user to all users, along with a list of current usernames

@@ -19,7 +19,7 @@ public class Question extends Model {
   *Constructor de la clase Question
   *@Param description descripcion pregunta, ans1,ans2,ans2,ans4 respuestas a la pregunta
   **/
-  public Question(String description,String ans1, String ans2, String ans3, String ans4, Long id_C){
+  public Question(String description,String ans1, String ans2, String ans3, String ans4, Integer id_C){
     validatePresenceOf("description").message("Please, provide a description"); 
     validatePresenceOf("answer1").message("Please, provide all answers"); 
     validatePresenceOf("answer2").message("Please, provide all answers"); 
