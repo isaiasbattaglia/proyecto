@@ -244,4 +244,8 @@ public class QuestionController{
       map.put("chooseCategory",true);
       return new ModelAndView(map, "./views/category/chooseCategory.html");
   }
+
+  public static ModelAndView createQuestion(Request req, Response res){
+      return new ModelAndView(new HashMap(), "./views/questions/createQuestion.html");
+  }
 }

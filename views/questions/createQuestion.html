@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Create Question</title>
+  <script src="/js/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/createQuestion.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+<body id="createAdmin">
+  <div class="col-md-6">
+  <div class="col-md-8">
+    <h4 id="success"> </h4>
+    <h4 id="newQuestion">Inserte una nueva pregunta</h4>
+    <div class="funkyradio">
+      <div class="funkyradio-success">
+        <label><input maxlength="150" type="text" name="pregunta" id="question"> </label>
+      </div>
+      <select class="selectpicker" id="option">
+        <option>Historia</option>
+        <option>Geografia</option>
+        <option>Arte</option>
+        <option>Deportes</option>
+        <option>Ciencia</option>
+        <option>Entretenimiento</option>
+      </select>
+      <div class="funkyradio-success">
+        <input maxlength="150" onclick="saveOption(this.value)" type="radio" name="radio" id="radio1" value="1" />
+        <label for="radio1"><input id="input1"> </label>
+      </div>
+      <div class="funkyradio-success">
+        <input maxlength="150" onclick="saveOption(this.value)" type="radio" name="radio" id="radio2" value="2" />
+        <label for="radio2"><input id="input2"></label>
+      </div>
+      <div class="funkyradio-success">
+        <input maxlength="150" onclick="saveOption(this.value)" type="radio" name="radio" id="radio3" value="3" />
+        <label for="radio3"><input id="input3"></label>
+      </div>
+      <div class="funkyradio-success">
+        <input maxlength="150" onclick="saveOption(this.value)" type="radio" name="radio" id="radio4" value="4" />
+        <label for="radio4"><input id="input4"></label>
+      </div>
+      <button onclick="createQuestion()">Enviar</button>
+    </div>
+  </div>
+  </div>
+  <script src="websocketDemo.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
