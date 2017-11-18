@@ -236,9 +236,24 @@ public class Game extends Model {
   
 
   public String state(){
-    return (String) this.get("state");
+    User user;
+    if(getState().compareTo("Turn1")==0)
+      user = User.findById(getUser2Id());
+    else
+      user = User.findById(getUser1Id());
+    return user.getUsername();
   }
 
+  public Integer amount_of_categories1(){
+    return getAmountOfCategories1();
+  }
+  public Integer amount_of_categories2(){
+    return getAmountOfCategories2();
+  }
+
+  public Integer round(){
+    return getRound();
+  }
   public void incrementRound(){
     this.set("round",(Integer)this.get("round")+1).saveIt();
   }
