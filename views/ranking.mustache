@@ -1,46 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/ranking.css">
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/ranking.css">
+   <!--<link rel="stylesheet" href="css/nuevo.css">-->
+   <title>Pregunta2</title>
 </head>
 <body>
-	<table class="menu">
-		<tl>
-			<td>
-				<form action="/ranking" method="get">
-					<input class="ranking" type="submit" value="Ranking">
-				</form>
-			</td>
-			<td>
-				<form action="/profile" method="get">
-					<input class="profile" type="submit" value="Perfil">
-				</form>				
-			</td>
-			<td>
-				<form action="/logout" method="get">
-					<input class="logout" type="submit" value="Cerrar Sesion">
-				</form>					
-			</td>
-		</tl>
-	</table>
-
-	<div class="bloque">
-		<form action="/games" method="get">
-			<input class="cancelar" type="submit" value=" X ">
-		</form>
-		<h4>Top 10</h4>
-		<div class="bloque2">
-				<ul>
-					{{#ranking}}
-					<div class="cajas">
-						<li> 
-							<h3>  usuario: {{username}} ||  Nivel: {{level}} </h3> 
-						</li>
-					</div>
-					{{/ranking}}
-				</ul>
+	 	<!--Navigation Section-->
+		<div class="container">
+			<header>
+					<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+						<div class="container-fluid">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-1">
+									<span class="sr-only">Menu</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>	
+								<a href="#page-top" class="navbar-brand js-scroll-trigger"><strong>Pregunta2</strong></a>
+							</div>
+							<div class="collapse navbar-collapse" id="navbar-1">
+								<ul class="nav navbar-nav navbar-right" role="tablist">
+									<li class="nav-item"><a href="/logout"> <strong>Cerrar Sesion</strong></a></li>
+									<li class="nav-item"><a href="/games"><strong>Home</strong> </a></li>	
+								</ul>
+							</div>
+						</div>
+					</nav>
+			</header>
 		</div>
-		
-	</div>
+		<!-- Ranking section -->
+    <div class="table-users">
+      <div class="header">Ranking - Top 10</div>
+        <table cellspacing="0">
+          <tr>
+            <th class="col-xs-2">Avatar</th>
+            <th class="col-xs-4">Nombre</th>
+            <th class="col-xs-2">Nivel</th>
+            <th class="col-xs-2">Puntos</th>
+            <th class="col-xs-2" width="230"></th>
+          </tr>
+          <tr>
+          {{#ranking}}
+            <td class="col-xs-2"><img src="img/rueda.png" alt="" /></td>
+            <td class="col-xs-4">{{username}}</td>
+            <td class="col-xs-2">{{level}}</td>
+            <td class="col-xs-2">Puntos:</td>
+            <td class="col-xs-2">Seguir/Dejar Seguir </td>
+          </tr>
+          {{/ranking}}
+        </table>
+    </div>
 </body>
-</html>
+ 	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/profile.js"></script>   
+</hmtl>
