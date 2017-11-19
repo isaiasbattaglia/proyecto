@@ -25,10 +25,15 @@ public class GameController{
 		User actualUser = UserService.getUser(id);
     List<Game> games = GameService.getGames(id);
     List<Game> finalizedGames = GameService.getFinalizedGames(id);
+    boolean notEmptyGames = !games.isEmpty();
+    boolean notEmptyFGames = !finalizedGames.isEmpty();
+    System.out.println(notEmptyFGames+"asd asd"+notEmptyGames);
 	  map.put("games", games);
     map.put("finalizedGames", finalizedGames);  
  		map.put("lifes",actualUser.getLifes());
   	map.put("level",actualUser.getLevel());
+    map.put("notEmptyFGames",notEmptyFGames);
+    map.put("notEmptyGames", notEmptyGames);
     map.put("admin",isAdmin);
   	return new ModelAndView(map,"./views/games/home.mustache");
   }
