@@ -193,4 +193,23 @@ public class GameController{
   public static ModelAndView fightLobby(Request req, Response res){
     return new ModelAndView(new HashMap(), "./views/games/playDuel.html");
   }
+
+   /**
+   * This method allows delete a game.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return an integer value that indicates that the game was deleted correctly.
+   * @post. database updated.
+  */
+  public static Integer deleteGame(Request req, Response res){
+    Integer gameID = new Integer(req.queryParams("id"));
+    Integer userID = new Integer(req.queryParams("uid"));
+    Game game = GameService.getGame(gameID);
+    if(GameService.isPlayerOne(gameID,userID))
+      game.setDeletedByUser1(true);
+    else
+      game.setDeletedByUser2(true);
+    return 0;
+  }
 }

@@ -186,16 +186,35 @@ public class UserService{
   public static List<User> top10(){
     return User.findBySQL("select username, level from users order by level desc limit 10");
   }
-
+   /**
+   * This method returns a boolean value that indicates if the given user is an admin,
+   * @param userID id of the user.
+   * @pre. true.
+   * @return a boolean value that indicates if the given user is an admin,
+   * @post. a boolean value that indicates if the given user is an admin, is returned.
+  */
   public static boolean isAdmin(Integer userID){
     return getUser(userID).getAdmin();
   }
-
+   /**
+   * This method returns a boolean value that indicates if the given username is valid.
+   * @param username
+   * @pre. true.
+   * @return a boolean value that indicates if the given username is valid.
+   * @post. a boolean value that indicates if the given username is valid, is returned.
+  */
   public static boolean validUser(String username){
     List<User> users = User.where("username=?",username);
     return users.size()==1;
   }
-
+   /**
+   * This method allows create a new admin and return a boolean value 
+   * that indicates whether the admin could be created or not.
+   * @param username 
+   * @pre. true.
+   * @return a boolean value that indicates whether the admin could be created or not.
+   * @post. a boolean value that indicates whether the admin could be created or not, is returned.
+  */
   public static boolean createAdmin(String username){
     List<User> users = User.where("username=?",username);
     User u1 = users.get(0);
