@@ -15,6 +15,17 @@ public class CategoryService{
   	Random r = new Random();
   	return list.get(r.nextInt(list.size()));
   }
+   /**
+   * This method returns a random category for duel mode.
+   * @pre. true.
+   * @return a Category object representing a random category.
+   * @post. a Category object representing a random category, is returned.
+  */
+  public static Category randomCategoryForDuel(){
+    List<Category> list = Category.where("id!=?",7); //Number 7 represents "Comodin".s 
+    Random r = new Random();
+    return list.get(r.nextInt(list.size()));
+  }
 
    /**
    * This method returns a category that corresponds to the id.

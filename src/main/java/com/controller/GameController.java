@@ -52,7 +52,7 @@ public class GameController{
     if (actualUser.getLifes().compareTo(0)>0){
 			Game game = GameService.createGame(userID);
       Integer gameID = game.getGameId();
-      res.redirect ("/play"); //PREGUNTAR!!
+      res.redirect ("/play");
   		return new ModelAndView(map,"./views/home.mustache");
       //return showRandomCategory(map,category.getTCategory());
       //redirect.get("/newGame", "/play");

@@ -2,7 +2,7 @@
 <html>
 <header>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/correct.css">
+	<link rel="stylesheet" type="text/css" href="css/finalizedGame.css">
 	<script src="/js/jquery.js"></script>
 </header>
 <body>
@@ -10,10 +10,9 @@
 		<h1> </h1>
 	{{#final}}
     <div class="container">
-      <div class="card card-container">
-        <img id="profile-img" class="profile-img-card" src="http://preguntados.com/compiled/img/character-crown2.png" />
-          <p id="profile-name" class="profile-name-card"></p>
-            <span id="reauth-email" class="reauth-email"></span>
+      <div class="card card-container2">
+        <img id="profile-img" class="profile-img-card3" src="http://preguntados.com/compiled/img/character-crown2.png" />
+          <p id="profile-name" class="profile-name-card2"></p>
             <h3>{{correct}}a</h3>
 			      <form action="/finalizedGame" method="get">
               <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>
@@ -24,10 +23,9 @@
 	{{/final}}
   {{#no_final}}
     <div class="container">
-      <div class="card card-container">
-        <img id="profile-img" class="profile-img-card" src="http://preguntados.com/compiled/img/character-crown2.png" />
-          <p id="profile-name" class="profile-name-card"></p>
-            <span id="reauth-email" class="reauth-email"></span>
+      <div class="card card-container2">
+        <img id="profile-img" class="profile-img-card3" src="http://preguntados.com/compiled/img/character-crown2.png" />
+          <p id="profile-name" class="profile-name-card2"></p>
             <h3>{{correct}}a</h3>
             <form action="/play" method="get">
               <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>

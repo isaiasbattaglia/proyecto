@@ -39,5 +39,4 @@ public class Category extends Model {
     Integer i = r.nextInt(lst.size());
     return lst.get(i);
   }
-
 }
