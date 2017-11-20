@@ -41,14 +41,17 @@ public class UserController{
 		String username = req.queryParams("nickname");
 		String email = req.queryParams("Email");
 		if(!password1.equals(password2)){
-			map.put("error","Las contraseñas no coinciden");
+      res.redirect("#signup?Error=PassError");
+			//map.put("error","Las contraseñas no coinciden");
 			return new ModelAndView(map, "./views/users/new.mustache");
 		}
 		if(UserService.userRegister(username,password1,email)){
+      res.redirect("#signin?Error=Success");
 			return new ModelAndView(map, "./views/home.mustache");
 		}
 		else{
-			map.put("error","Verifique nombre de usuario o email");
+      res.redirect("#signin?Error=userMail");
+			//map.put("error","Verifique nombre de usuario o email");
 			return new ModelAndView(map, "./views/users/new.mustache");
 		}
 	}
@@ -70,8 +73,9 @@ public class UserController{
 		String password = req.queryParams("password");
 		if(UserService.validUser(username,password)){
 			if(sessionOpen(req)){
-				map.put("SessionOpen","Ya has iniciado sesion como: " + req.session().attribute("user"));
-				return new ModelAndView(map,"./views/home.mustache");
+				//map.put("SessionOpen","Ya has iniciado sesion como: " + req.session().attribute("user"));
+				res.redirect("#signin?Error=SessionOpen&username="+req.session().attribute("user"));
+        return new ModelAndView(map,"./views/home.mustache");
 			}
 			else{
 				Integer userID = UserService.getUserId(username,password);
@@ -86,7 +90,8 @@ public class UserController{
 			}
 		}
 		else{
-			map.put("error","usuario o contraseña incorrecta");
+      res.redirect("#signin?Error=wrongPass");
+			//map.put("error","usuario o contraseña incorrecta");
 			return new ModelAndView(map, "./views/home.mustache");
 		}
 	}
