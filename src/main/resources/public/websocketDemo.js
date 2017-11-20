@@ -101,7 +101,7 @@ function update(msg){
 }
 
 function cancelReq(rivalID){
-  var jsonObj = {"requesterID":rivalID, "message":"cancelReq"};
+  var jsonObj = {"requestedID":rivalID, "message":"cancelReq"};
   var jsonString = JSON.stringify(jsonObj);
   webSocket.send(jsonString);
   window.location.replace("/fightLobby");

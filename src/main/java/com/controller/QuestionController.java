@@ -7,6 +7,7 @@ import spark.Response;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import org.json.JSONObject;
 
 public class QuestionController{
 
@@ -130,7 +131,7 @@ public class QuestionController{
     Game currentGame = GameService.getGame(gameID);
     currentGame.setRound(currentGame.getRound()+1);
     User rival= GameService.getRival(gameID,userID);
-    App.broadcastMessage(rival.getInteger("id"));
+    MultiplayerHelper.broadcastMessage(rival.getInteger("id"));
     return checkLastRound(req,gameID,false,false);
   }
 
@@ -163,7 +164,7 @@ public class QuestionController{
   }
 
   /**
-   * This method checks if the last round of the game was reached, and returns correct or wrong answer view as appropiate
+   * This method checks if the last round of the game was reached, and returns correct or wrong answer view as MultiplayerHelperropiate
    * and sends message to rival if the game was finalized.
    * @param req Provides information about the HTTP request.
    * @param gameID id of the game where the user plays.
@@ -183,7 +184,7 @@ public class QuestionController{
       map.put("final",true);
       Integer userID = req.session().attribute("userID");
       User rival= GameService.getRival(gameID,userID);
-      App.broadcastMessage(rival.getInteger("id"));
+      MultiplayerHelper.broadcastMessage(rival.getInteger("id"));
     }
     else
       map.put("no_final",true);
@@ -245,7 +246,43 @@ public class QuestionController{
       return new ModelAndView(map, "./views/category/chooseCategory.html");
   }
 
+  /**
+   * This method returns a createQuestion view.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return a ModelAndView that contains a createQuestion view.
+   * @post. a ModelAndView that contains a createQuestion view, is returned.
+  */
   public static ModelAndView createQuestion(Request req, Response res){
       return new ModelAndView(new HashMap(), "./views/questions/createQuestion.html");
+  }
+
+  /**
+   * This method returns a String value that represents a wrong Answer. 
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return a String value that represents a wrong Answer. 
+   * @post. a String value that represents a wrong Answer, is returned.
+  */
+  public static String getWrongAnswer(Request req, Response res){
+    return QuestionService.wrongAnswer;
+  }
+
+  /**
+   * This method allows create a new question
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return an integer value indicating that the question was created.
+   * @post. database updated.
+  */
+  public static Integer newQuestion(Request req, Response res){
+    JSONObject json = new JSONObject(req.queryParams("json"));
+    Integer categoryID = CategoryService.getCategoryId(new String(json.getString("category")));
+    Question question = new Question(new String(json.getString("question")),new String(json.getString("correct")),new String(json.getString("answer2")),
+      new String(json.getString("answer3")),new String(json.getString("answer4")),categoryID);
+    return 0;
   }
 }

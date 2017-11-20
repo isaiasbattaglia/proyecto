@@ -189,7 +189,42 @@ public class UserController{
 		return (req.session().attribute("userID")!=null);
 	}
 
+
+  /**
+   * This method returns a create admin view.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @return a ModelAndView containing the create admin view
+   * @post. a ModelAndView containing the create admin view, is returned.
+  */
   public static ModelAndView createAdmin(Request req, Response res){
     return new ModelAndView(new HashMap(), "./views/users/createAdmin.html");
+  }
+
+  /**
+   * This method returns a boolean value that indicates if a given username is valid or not.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @returna boolean value that indicates if a given username is valid or not.
+   * @post. aa boolean value that indicates if a given username is valid or not, is returned.
+  */
+  public static boolean validateUser(Request req, Response res){
+    String name = req.queryParams("username");
+    return UserService.validUser(name);
+  }
+
+  /**
+   * This method returns a Boolean value that indicates whether it was possible to create an administrator.
+   * @param req Provides information about the HTTP request.
+   * @param res Provides information about the HTTP response.
+   * @pre. true.
+   * @returna a Boolean value that indicates whether it was possible to create an administrator.
+   * @post. database updated.
+  */
+  public static boolean newUser(Request req, Response res){
+    String name = req.queryParams("username");
+    return UserService.createAdmin(name);
   }
 }

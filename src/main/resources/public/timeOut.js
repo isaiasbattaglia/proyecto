@@ -25,11 +25,6 @@ function getWrongAnswer() {
         async: false,
         success : function(answer) {
         	wa=answer;
-   	      //var form = `<form action="/answer?answer=${wa}" method="post" id="wrongAnswer"></form>`;
-   	      //document.getElementById("wrong").innerHTML=form;
-   	      //document.getElementById("wrongAnswer").innerHTML=document.getElementById("chooseCategory");
-   	      //document.getElementById("wrongAnswer").innerHTML=document.getElementById("questID");
-   	      //document.getElementById("wrongAnswer").innerHTML=document.getElementById("gameID");
         }
     });
 }
