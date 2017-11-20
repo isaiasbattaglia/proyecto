@@ -1,22 +1,107 @@
 <!DOCTYPE html>
 <html>
 <header>
-	<link rel="stylesheet" type="text/css" href="/css/profile.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/profile2.css">
 </header>
 <body>
-	<div class="caja">
-		<form action="/games" method="get">
-			<input class="cancelar" type="submit" value=" X ">
-		</form>
-			<h1>{{user}}</h1>
-		<div class="box">
-			<h2>Vidas: {{lifes}}</h2>
-			<h2>Puntos: {{Total_Points}}</h2>
-			<h2>Puntos para siguiente nivel: {{points_to_next_level}}</h2>
-			<h2>Preguntas Correctas: {{correct_questions}}</h2>
-			<h2>Preguntas Incorrectas: {{incorrect_questions}}</h2>
-			<h2>Nivel: {{level}}</h2>
+		<!--Navigation Section-->
+		<div class="container">
+			<header>
+					<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+						<div class="container-fluid">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-1">
+									<span class="sr-only">Menu</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>	
+								<a href="#page-top" class="navbar-brand js-scroll-trigger"><strong>Pregunta2</strong></a>
+							</div>
+							<div class="collapse navbar-collapse" id="navbar-1">
+								<ul class="nav navbar-nav navbar-right" role="tablist">
+									<li class="nav-item"><a href="/logout"> <strong>Cerrar Sesion</strong></a></li>
+									<li class="nav-item"><a href="/games"><strong>Home</strong> </a></li>	
+								</ul>
+							</div>
+						</div>
+					</nav>
+			</header>
 		</div>
-	</div>
+
+
+		<div class="container">
+			<div class="row">
+		       
+		       <div class="col-md-7 ">
+
+						<div class="panel panel-default">
+				  		<div class="panel-heading">  <h4 >Perfil de Usuario</h4></div>
+				   		<div class="panel-body">
+				       
+				    		<div class="box box-info">
+		        
+		            <div class="box-body">
+		                     <div class="col-sm-5">
+		                     <div  align="center"> <img alt="User Pic" src="https://images-na.ssl-images-amazon.com/images/I/51Nf7DSjczL.png" id="profile-image1" class="img-circle img-responsive"></div>
+		              
+		              <br>
+		    
+		              <!-- /input-group -->
+		            </div>
+		            <div class="col-sm-8">
+		            
+		                       
+		            </div>
+		            <div class="clearfix"></div>
+		            <hr style="margin:5px 0 5px 0;">
+		    
+		              
+											<div class="col-sm-5 col-xs-6 tital " >Nombre:</div><div class="col-sm-7 col-xs-6 ">{{user}}</div>
+											     <div class="clearfix"></div>
+											<div class="bot-border"></div>
+
+											<div class="col-sm-5 col-xs-6 tital " >Vidas:</div><div class="col-sm-7"> {{lifes}}</div>
+											  <div class="clearfix"></div>
+											<div class="bot-border"></div>
+
+											<div class="col-sm-5 col-xs-6 tital ">Nivel:</div><div class="col-sm-7"> {{level}}</div>
+											  <div class="clearfix"></div>
+											<div class="bot-border"></div>
+
+											<div class="col-sm-5 col-xs-6 tital " >Puntos para el Siguiente Nivel:</div><div class="col-sm-7">{{points_to_next_level}}</div>
+
+											  <div class="clearfix"></div>
+											<div class="bot-border"></div>
+
+											<div class="col-sm-5 col-xs-6 tital " >Preguntas Correctas:</div><div class="col-sm-7">{{correct_questions}}</div>
+
+											  <div class="clearfix"></div>
+											<div class="bot-border"></div>
+
+											<div class="col-sm-5 col-xs-6 tital " >Preguntas Incorrectas:</div><div class="col-sm-7">{{incorrect_questions}}</div>
+											 <div class="clearfix"></div>
+											<div class="bot-border"></div>
+
+											
+
+
+				            <!-- /.box-body -->
+				          </div>
+				          <!-- /.box -->
+
+				        </div>
+				       
+				            
+				    </div> 
+				    </div>
+				</div>         
+			</div>
+		</div>
+	
 </body>
 </html>
+
+
+
