@@ -9,7 +9,7 @@ $(document).ready(function(){
 
 function myTimer() {
 	timer=timer-1;
-    document.getElementById("timer").innerHTML = timer;
+    document.getElementById("qid").innerHTML = timer;
 }
 
 function wrongAnswer(){

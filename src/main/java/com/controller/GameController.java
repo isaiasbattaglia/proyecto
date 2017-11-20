@@ -113,6 +113,8 @@ public class GameController{
       map.put("deportes",true);
     if (tCategory.equals("Arte"))
       map.put("arte",true);
+    if (tCategory.equals("Comodin"))
+      map.put("comodin",true);
     return new ModelAndView (map, "./views/category/randomCategory.mustache");
   }
   
