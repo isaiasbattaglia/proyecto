@@ -12,7 +12,12 @@ body, html {
     background-color:transparent;
       border-radius: 40px;
 }
-
+.card-container2.card {
+    max-width: 450px;
+    padding: 60px 50px;
+    background-color:rgba(1,1,1,.19);
+      border-radius: 40px;
+}
 .btn {
   display: inline-block;
   padding: 6px 12px;
@@ -79,6 +84,23 @@ body, html {
 
 
 }
+/*
+ * Card component
+ */
+.card2 {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
 
 .profile-img-card {
     width: 320px;
@@ -111,4 +133,24 @@ body, html {
     -webkit-border-radius: 500%;
     border-radius: 10%;
     border-color:white;
+}
+
+.profile-img-card3 {
+    width: 120px;
+    height: 150px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 500%;
+    -webkit-border-radius: 500%;
+    border-radius: 100%;
+}
+/*
+ * Form styles
+ */
+.profile-name-card2 {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 10em;
 }

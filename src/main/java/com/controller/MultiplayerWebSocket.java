@@ -22,9 +22,9 @@ public class MultiplayerWebSocket {
       User currentUser = MultiplayerHelper.userUsernameMap.get(user);
       MultiplayerHelper.usersInDuelLobby.remove(user);
       MultiplayerHelper.leaveTheGame(currentUser);
-      MultiplayerHelper.updateOnlineUsers("updateOnlineUsers");
-      MultiplayerHelper.userUsernameMap.remove(user);
       MultiplayerHelper.updateOnlineUsers("updateUsersForDuel");
+      MultiplayerHelper.userUsernameMap.remove(user);
+      MultiplayerHelper.updateOnlineUsers("updateOnlineUsers");
     }
 
     @OnWebSocketMessage

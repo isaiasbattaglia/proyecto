@@ -149,10 +149,10 @@ public class MultiplayerHelper{
   */
   private static JSONObject generateQuestionJSON(Game game){
     JSONObject json = new JSONObject();
-    Category category = CategoryService.randomCategory();
-    Question question = category.getQuestion();      //change name
+    Category category = CategoryService.randomCategoryForDuel();
+    Question question = category.getQuestion();
     game.setCurrentQuestion(question.getDescription());
-    List<String> options = QuestionService.randomAnswers(question);  //change name
+    List<String> options = QuestionService.randomAnswers(question);
     json.put("msg","showQuestion");
     json.put("gameID",game.getInteger("id"));
     json.put("questionID",question.getInteger("id"));

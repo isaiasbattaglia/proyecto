@@ -39,10 +39,13 @@ function deletee(id) {
 }
 
 function clear(){
-  id("userlistt").innerHTML="";
+  $('#DuelLobby > #table2').hide();
+  $('#DuelLobby > #result').hide();
+  $('#DuelLobby > #finalResults').hide();
   id("message").innerHTML="";
   id("options").innerHTML="";
   id("question").innerHTML="";
+  id("cancelButton").innerHTML="";
 }
 
 function showMessage(message){
@@ -70,13 +73,14 @@ function update(msg){
         notifyTurn();
     if(data.msg=="wait"){
       id("playOrNot").innerHTML="Play";
-      var input = `<li><button onclick=cancelReq(${data.rivalID})> Cancelar </button></li>`;
-      showMessage("Esperando aceptacion de rival"+input);
+      var input = `<button class="btn btn-primary btn-lg round" onclick="cancelReq(${data.rivalID})"> Cancelar </button>`;
+      insert("cancelButton",input);
+      showMessage("Esperando aceptacion de rival");
     }
     if(data.msg=="acceptReject"){
         id("playOrNot").innerHTML="Play";
         var userID = data.requesterUser;
-        var input = `<button onclick=requestAccepted(${userID})> Aceptar </button> <button onclick=requestRejected(${userID})>Rechazar</button>`;
+        var input = `<button class="btn btn-primary btn-lg round"  onclick="requestAccepted(${userID})"> Aceptar </button> <button class="btn btn-primary btn-lg round" onclick="requestRejected(${userID})">Rechazar</button>`;
         showMessage(input);
     }
     if(data.msg=="showQuestion"){
@@ -90,8 +94,8 @@ function update(msg){
         showFinalResult(data);
     if(data.msg=="ReqRejected"){
       clear();
-      var mesg = `<h1>Tu rival rechazo la peticion de duelo.</h1>`;
-      var input = `<li><button>Aceptar</buton></li>`;
+      var mesg = `Tu rival rechazo la peticion de duelo.`;
+      var input = `<button class="btn btn-primary btn-lg round">Aceptar</button>`;
       var form = `<form action="/fightLobby" method="get">${mesg} ${input}</form>`;
       showMessage(form);
     }
@@ -118,8 +122,8 @@ function requestRejected(rivalID){
 function showWinMessage(){
   if(id("playOrNot").innerHTML=="Play"){
     clear();
-    var mesg = `<h1> Tu rival ha abandonado el duelo, ganaste.</h1>`;
-    var input = `<li><button>Aceptar</buton></li>`;
+    var mesg = `Tu rival ha abandonado el duelo, ganaste.`;
+    var input =`<button class="btn btn-primary btn-lg round">Aceptar</button>`;
     var form = `<form action="/fightLobby" method="get">${mesg} ${input}</form>`;
     showMessage(form);
   }
@@ -127,27 +131,50 @@ function showWinMessage(){
 
 function showQuestion(msg){
   clear();
-  id("playOrNot").innerHTML="Play";
   var data = JSON.parse(msg.data);
+  var span= `<span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>`;
+  var input1=`<input id="answer1" type="hidden" name="q_answer" value="${data.option1}">${data.option1}`;
+  var label1=`<label onclick="sendAnswer('${data.option1}')" class="element-animation1 btn btn-lg btn-primary btn-block">${span} ${input1}</label>`;
+
+  var input2=`<input id="answer2" type="hidden" name="q_answer" value="${data.option2}">${data.option2}`;
+  var label2=`<label onclick="sendAnswer('${data.option2}')" class="element-animation1 btn btn-lg btn-primary btn-block">${span} ${input2}</label>`;
+
+  var input3=`<input id="answer3" type="hidden" name="q_answer" value="${data.option3}">${data.option3}`;
+  var label3=`<label onclick="sendAnswer('${data.option3}')" class="element-animation1 btn btn-lg btn-primary btn-block">${span} ${input3}</label>`;
+
+  var input4=`<input id="answer4" type="hidden" name="q_answer" value="${data.option4}">${data.option4}`;
+  var label4=`<label onclick="sendAnswer('${data.option4}')" class="element-animation1 btn btn-lg btn-primary btn-block">${span} ${input4}</label>`;
+  id("playOrNot").innerHTML="Play";
   id("question").innerHTML=data.question;
-  id("options").innerHTML=`<li><button value="${data.option1}" onclick="sendAnswer(this.value)">${data.option1}</buton></li>`;
-  id("options").innerHTML+=`<li><button value="${data.option2}" onclick="sendAnswer(this.value)">${data.option2}</buton></li>`;
-  id("options").innerHTML+=`<li><button value="${data.option3}" onclick="sendAnswer(this.value)">${data.option3}</buton></li>`;
-  id("options").innerHTML+=`<li><button value="${data.option4}" onclick="sendAnswer(this.value)">${data.option4}</buton></li>`;
+  id("options").innerHTML=label1;
+  id("options").innerHTML+=label2;
+  id("options").innerHTML+=label3;
+  id("options").innerHTML+=label4;
 }
 
 function sendAnswer(answer){
   var jsonObj = {"id": currentUserID, "answer":answer, "message":"answered", "gameID":game, "questionID":question};    
   var jsonString = JSON.stringify(jsonObj);
   webSocket.send(jsonString);
+  waiting();
 }
 
 function showResult(data){
   if(data.correct)
-      showMessage("Respondiste correctamente");
+      showCorrectWrong(true);
   else
-      showMessage("Respondiste incorrectamente");
+      showCorrectWrong(false);
   setTimeout(function(){requestNewQuestion(data);},3000);
+}
+
+
+function showCorrectWrong(correct){
+  clear();
+  $('#DuelLobby > #result').show();
+  if(correct)
+    id("message2").innerHTML="Respondiste correctamente";
+  else
+    id("message2").innerHTML="Respondiste incorrectamente";
 }
 
 function requestNewQuestion(data){
@@ -171,13 +198,22 @@ function notifyTurn(){
 function updateChat(data) {
   if(id("userlist")!=null){
     id("userlist").innerHTML = "";
-    data.userlist.forEach(function (user) {
-        if(user.id!=currentUserID){
-          var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="play(this.value)">Play</buton></li>`;
-          var form = `<form action="/play" method="get">${input}</form>`;
-          insert("userlist", form); 
-        }
-    });
+    if(data.userlist.length-1>0){
+      $("table").show();
+      data.userlist.forEach(function (user) {
+          if(user.id!=currentUserID){
+            var username = `${user.username}`;
+            id("name").innerHTML="";
+            insert("name",username)
+            var input = `<button class="btn btn-primary btn-lg round" value=${user.id} id=${count++} onclick="play(this.value)">Jugar</button>`;
+            var form = `<form action="/play" method="get">${input}</form>`;
+            insert("userlist", form); 
+          }
+      });
+    }
+    else{
+      $("table").hide();
+    }
   }
 }
 
@@ -185,33 +221,47 @@ function updateChat2(data) {
     if(id("playOrNot").innerHTML!="Play"){
       if(id("userlistt")!=null){
         id("userlistt").innerHTML = "";
-        data.userlist.forEach(function (user) {
-          if(user.id!=currentUserID){
-            var input = `<li>${user.username}<button value=${user.id} id=${count++} onclick="sendGameRequest(this.value)">Play</buton></li>`;
-            //var form = `<form action="/playDuel" method="get">${input}</form>`;
-            insert("userlistt", input);
-          }
-        });
+        console.log(data.userlist);
+        if(data.userlist.length-1>0){
+          $('#DuelLobby > #table2').show();
+          data.userlist.forEach(function (user) {
+            if(user.id!=currentUserID){
+              var username = `${user.username}`;
+              id("name2").innerHTML=username;
+              var input = `<button class="btn btn-primary btn-lg round" value=${user.id} id=${count++} onclick="sendGameRequest(this.value)">Jugar</button>`;
+              insert("userlistt", input);
+            }
+          });
+        }
+        else
+          $('#DuelLobby > #table2').hide();
       }
     }
 }
 
 function showFinalResult(data){
-      var button = `<li><button>Aceptar</buton></li>`;
+    clear();
+    $('#DuelLobby > #finalResults').show();
+    var button = `<button class="btn btn-primary btn-lg round">Aceptar</button>`;
+    var form = `<form action="/fightLobby" method="get">${button}</form>`;
+    id("button2").innerHTML=form;
     if(data.draw){
-      var input = `Empataste.<li>Respuestas correctas:${data.correct}</li><li>Respuestas incorrectas:${data.wrong}</li>`;
-      var form = `<form action="/fightLobby" method="get">${input} ${button}</form>`;
-      showMessage(form);
+      id("profile-img").src="http://www.triviacrackkingdoms.com/img/rules/king.png";
+      id("win").innerHTML="Empataste";
+      id("correctAnswers").innerHTML="Respuestas correctas: "+data.correct;
+      id("wrongAnswers").innerHTML="Respuestas incorrectas: "+data.wrong;
     }
     else if(data.win){
-      var input = `Ganaste.<li>Respuestas correctas:${data.correct}</li><li>Respuestas incorrectas:${data.wrong}</li>`;
-      var form = `<form action="/fightLobby" method="get">${input} ${button}</form>`;
-      showMessage(form);
+      id("profile-img").src="http://www.androidappsforpc.org/wp-content/uploads/2015/02/characters-1.png";
+      id("win").innerHTML="Ganaste";
+      id("correctAnswers").innerHTML="Respuestas correctas: "+data.correct;
+      id("wrongAnswers").innerHTML="Respuestas incorrectas: "+data.wrong;
     }
     else{
-      var input = `Perdiste.<li>Respuestas correctas:${data.correct}</li><li>Respuestas incorrectas:${data.wrong}</li>`;
-      var form = `<form action="/fightLobby" method="get">${input} ${button}</form>`;
-      showMessage(form);
+      id("profile-img").src="http://triviacrackkingdoms.com/img/characters/chara-marks.png";
+      id("win").innerHTML="Perdiste";
+      id("correctAnswers").innerHTML="Respuestas correctas: "+data.correct;
+      id("wrongAnswers").innerHTML="Respuestas incorrectas: "+data.wrong;
     }
 }
 
