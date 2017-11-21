@@ -27,7 +27,6 @@ public class GameController{
     List<Game> finalizedGames = GameService.getFinalizedGames(id);
     boolean notEmptyGames = !games.isEmpty();
     boolean notEmptyFGames = !finalizedGames.isEmpty();
-    System.out.println(notEmptyFGames+"asd asd"+notEmptyGames);
 	  map.put("games", games);
     map.put("finalizedGames", finalizedGames);  
  		map.put("lifes",actualUser.getLifes());
