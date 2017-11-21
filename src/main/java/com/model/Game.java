@@ -59,6 +59,8 @@ public class Game extends Model {
     set("mode","Turn");
     set("deletedByUser1",false);
     set("deletedByUser2",false);
+    set("amount_of_correct1",0);
+    set("amount_of_correct2",0);
     saveIt();
     User user = this.parent(User.class);  //Get user1
     user.set("lifes",user.getLifes()-1).saveIt();
@@ -138,6 +140,12 @@ public class Game extends Model {
     set("deletedByUser2",delete).saveIt();
   }
 
+  public void setAmountOfCorrect1(Integer newValue){
+    set("amount_of_correct1",newValue).saveIt();
+  }
+  public void setAmountOfCorrect2(Integer newValue){
+    set("amount_of_correct2",newValue).saveIt();
+  }
   public Integer getRound(){
     return (Integer) get("round");
   }
@@ -225,6 +233,12 @@ public class Game extends Model {
   }
   public Boolean getDeletedByUser2(){
     return (Boolean)get("deletedByUser2"); 
+  }
+  public Integer getAmountOfCorrect1(){
+    return (Integer)get("amount_of_correct1");
+  }
+  public Integer getAmountOfCorrect2(){
+    return (Integer)get("amount_of_correct2");
   }
 
 
