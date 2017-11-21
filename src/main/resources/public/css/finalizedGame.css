@@ -3,7 +3,7 @@ body, html {
     color:white;  
     text-align: center;
     background-repeat: no-repeat;
-    background-image: url(https://fgccreative.com/wp-content/uploads/2017/01/dark-grey-background-pattern-i7.jpg);  
+    background-image: url("/img/fondo.jpg");  
 }
 
 .card-container.card {

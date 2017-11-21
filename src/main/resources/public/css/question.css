@@ -1,5 +1,5 @@
 body{
-  background-image: url(https://fgccreative.com/wp-content/uploads/2017/01/dark-grey-background-pattern-i7.jpg);  
+  background-image: url("/img/fondo.jpg");  
   text-align: center;
   color:white;
 }
@@ -436,4 +436,17 @@ label .glyphicon {
 .btn-primary:active, .btn-primary.active {
   background: #2A6A6F;
   box-shadow: none;
+}
+
+.card-container.card {
+    max-width: 450px;
+    padding: 60px 50px;
+    background-color:transparent;
+      border-radius: 40px;
+}
+.card-container2.card {
+    max-width: 450px;
+    padding: 60px 50px;
+    background-color:rgba(1,1,1,.19);
+      border-radius: 40px;
 }

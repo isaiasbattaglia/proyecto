@@ -132,7 +132,7 @@ function showWinMessage(){
 function showQuestion(msg){
   clear();
   var data = JSON.parse(msg.data);
-  var span= `<span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span>`;
+  var span= `<span class="btn-label"><i></i></span>`;
   var input1=`<input id="answer1" type="hidden" name="q_answer" value="${data.option1}">${data.option1}`;
   var label1=`<label onclick="sendAnswer('${data.option1}')" class="element-animation1 btn btn-lg btn-primary btn-block">${span} ${input1}</label>`;
 
