@@ -1,67 +1,90 @@
 <!DOCTYPE html>
 <html>
-<header>
+<head>
 	<link rel="stylesheet" type="text/css" href="css/randomCategory.css">
 	<script src="/js/jquery.js"></script>
-</header>
+</head>
+
+
 <body>
 	<div class="box">
-		<form action="/games" method="get"><input class="cancelar" type="submit" value=" X "></form>
 		<form action="/questions" method="get">
-			{{#Historia}}
-			<form action="/questions" method="get" accept-charset="utf-8">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				<input type="hidden" name="category" value="Historia">
-				<input type="hidden" name="category_id" value="{{Historia_id}}">	
-				<button type="submit" class="categoryButton"><img src="img/historia.png"></button>
-			</form>
-			{{/Historia}}
-			{{#Arte}}
-			<form action="/questions" method="get" accept-charset="utf-8">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				<input type="hidden" name="category" value="Arte">	
-				<input type="hidden" name="category_id" value="{{Arte_id}}">	
-				<button type="submit" class="categoryButton"><img src="img/arte.png"></button>
-			</form>
-			{{/Arte}}
-			{{#Ciencia}}
-			<form action="/questions" method="get" accept-charset="utf-8">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				<input type="hidden" name="category_id" value="{{Ciencia_id}}">	
-				<input type="hidden" name="category" value="Ciencia">	
-				<button  type="submit" class="categoryButton"><img src="img/ciencia.png"></button>
-			</form>
-			{{/Ciencia}}
-			{{#Entretenimiento}}
-			<form action="/questions" method="get" accept-charset="utf-8">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				<input type="hidden" name="category_id" value="{{Entretenimiento_id}}">	
-				<input type="hidden" name="category" value="Entretenimento">	
-				<button  type="submit" class="categoryButton"><img src="img/entretenimiento.png"></button>
-			</form>
-			{{/Entretenimiento}}
-			{{#Deportes}}
-			<form action="/questions" method="get" accept-charset="utf-8">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				<input type="hidden" name="category" value="Deportes">	
-				<input type="hidden" name="category_id" value="{{Deportes_id}}">	
-				<button type="submit" class="categoryButton"><img src="img/deporte.png"></button>
-			</form>
-			{{/Deportes}}
-			{{#Geografia}}
-			<form action="/questions" method="get" accept-charset="utf-8">
-				<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				<input type="hidden" name="category_id" value="{{Geografia_id}}">	
-				<input type="hidden" name="category" value="Geografia">	
-				<button type="submit" class="categoryButton"><img src="img/geo.png"></button>
-			</form>
-			{{/Geografia}}
+		<table>
+			<thead>
+			 	<tbody>
+			 		<tr>
+					    <td>
+					    	{{#Historia}}
+							<form action="/questions" method="get" accept-charset="utf-8">
+								<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+								<input type="hidden" name="game_id" value="{{game_id}}">	
+								<input type="hidden" name="category" value="Historia">
+								<input type="hidden" name="category_id" value="{{Historia_id}}">	
+								<button type="submit" class="button"><img src="img/historia.png"></button>
+							</form>
+							{{/Historia}}
+					    </td>
+					    <td>
+							{{#Arte}}
+							<form action="/questions" method="get" accept-charset="utf-8">
+								<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+								<input type="hidden" name="game_id" value="{{game_id}}">	
+								<input type="hidden" name="category" value="Arte">	
+								<input type="hidden" name="category_id" value="{{Arte_id}}">	
+								<button type="submit" class="button"><img src="img/arte.png"></button>
+							</form>
+							{{/Arte}}
+					    </td> 
+					    <td>
+							{{#Ciencia}}
+							<form action="/questions" method="get" accept-charset="utf-8">
+								<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+								<input type="hidden" name="game_id" value="{{game_id}}">	
+								<input type="hidden" name="category_id" value="{{Ciencia_id}}">	
+								<input type="hidden" name="category" value="Ciencia">	
+								<button  type="submit" class="button"><img src="img/ciencia.png"></button>
+							</form>
+							{{/Ciencia}}
+					    	
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+							{{#Entretenimiento}}
+							<form action="/questions" method="get" accept-charset="utf-8">
+								<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+								<input type="hidden" name="game_id" value="{{game_id}}">	
+								<input type="hidden" name="category_id" value="{{Entretenimiento_id}}">	
+								<input type="hidden" name="category" value="Entretenimento">	
+								<button  type="submit" class="button"><img src="img/entretenimiento.png"></button>
+							</form>
+							{{/Entretenimiento}}
+					    </td>
+					    <td>
+							{{#Deportes}}
+							<form action="/questions" method="get" accept-charset="utf-8">
+								<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+								<input type="hidden" name="game_id" value="{{game_id}}">	
+								<input type="hidden" name="category" value="Deportes">	
+								<input type="hidden" name="category_id" value="{{Deportes_id}}">	
+								<button type="submit" class="button"><img src="img/deporte.png"></button>
+							</form>
+							{{/Deportes}}
+					    </td> 
+					    <td>
+							{{#Geografia}}
+							<form action="/questions" method="get" accept-charset="utf-8">
+								<input type="hidden" name="chooseCategory" value="{{chooseCategory}}">	
+								<input type="hidden" name="game_id" value="{{game_id}}">	
+								<input type="hidden" name="category_id" value="{{Geografia_id}}">	
+								<input type="hidden" name="category" value="Geografia">	
+								<button type="submit" class="button"><img src="img/geo.png"></button>
+							</form>
+							{{/Geografia}}
+					    </td>
+			 		</tr>
+			 	</tbody>
+			 </table> 
 		</form>
 	</div>
 	<script src="websocketDemo.js"></script>

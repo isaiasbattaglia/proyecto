@@ -16,10 +16,19 @@ body * {
   text-transform: uppercase;
 }
 
+
 img {
   border-radius: 50%;
-  height: 60px;
-  width: 60px;
+  height:60px;
+  width:60px;
+}
+.img1{
+  position:relative;
+    height:18px;
+    width:20px;
+    top:10px;
+    left:12px;
+    opacity:0.7;  
 }
 
 .table-users {
@@ -31,8 +40,8 @@ img {
   overflow: hidden;
   width: 800px;
   position: relative;
-    top:70px
-}
+  top:60px;
+ }
 
 table {
   width: 100%;
@@ -250,11 +259,11 @@ table tr:nth-child(2n+1) {
 ************************/
 
 .btn {
-  padding: 8px 15px;
-  border: 0 none;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+    padding: 10px 20px;
+    border: 0 none;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 .btn:focus, .btn:active:focus, .btn.active:focus {
   outline: 0 none;
@@ -281,15 +290,25 @@ div[class="buto"]{
   padding-top: 150px;
 }
 .nuevo{
-	position: relative;
-		right: 7%;
-		top:31px;
+  position: relative;
+    right: 7%;
+    top:-50px;
 }
-.duelo{
-	position: relative;
-		top: -10px;
-		left: 3%;
+
+
+
+.duelo {
+    position: relative;
+    top: -92px;
+    left: 10%;
 }
+
+.nuevo .duelo{
+  position:relative;
+  top:-50;
+}
+
+
 .dropdown{
     color: white !important;
     font-size: 13px;  
