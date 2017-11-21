@@ -23,6 +23,8 @@ CREATE TABLE games (
   correct_questions2 INT,
   wrong_questions2 INT,
   currentQuestion VARCHAR(150),
+  amount_of_correct1 INT,
+  amount_of_correct2 INT,
   created_at DATETIME,
   updated_at DATETIME
 )ENGINE=InnoDB;

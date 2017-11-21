@@ -90,7 +90,7 @@ public class QuestionController{
     UserService.updateProfile(UserService.getUser(userID), true);
     Boolean canChooseCategory = false;
     if(!chooseCategory)
-       canChooseCategory = updateLifes(req, userID);
+       canChooseCategory = updateLifes(req, userID, gameID);
 
     if (GameService.isPlayerOne(gameID,userID)){
       GameService.winACategory(Integer.parseInt(req.queryParams("question_id")),gameID,chooseCategory,true);
@@ -139,24 +139,36 @@ public class QuestionController{
    * This method increases the correct answers and if the third correct answer is reached, life increases in one.
    * @param req Provides information about the HTTP request.
    * @param userID id of the user.
+   * @param gameID id of the game where the user plays.
    * @pre. HTTP Session must be initialized.
    * @return a boolean value that indicates if the life of the user has been increases in one. (i.e the third correct answer was reached).
    * @post. a boolean value that indicates if the life of the user has been increases in one, is returned.
   */
-  private static Boolean updateLifes(Request req, Integer userID){
+  private static Boolean updateLifes(Request req, Integer userID, Integer gameID){
+    Game game = GameService.getGame(gameID);
+    Integer correct_ans;
+    if(GameService.isPlayerOne(gameID,userID))
+      correct_ans = game.getAmountOfCorrect1();
+    else
+      correct_ans = game.getAmountOfCorrect2();
     User actualUser = UserService.getUser(userID);
-    Integer correct_ans = req.session().attribute("correct_answer");
-    if(correct_ans>3){
-      req.session().removeAttribute("correct_answer");
-      req.session().attribute("correct_answer",0);  //Reset the correct answer.
+    if(correct_ans.compareTo(3)>0){
+      if(GameService.isPlayerOne(gameID,userID))
+        game.setAmountOfCorrect1(0);
+      else
+        game.setAmountOfCorrect2(0);
     }
     else{
-      req.session().removeAttribute("correct_answer");
-      req.session().attribute("correct_answer",correct_ans+1);
-      if((correct_ans+1)==3){
+      if(GameService.isPlayerOne(gameID,userID))
+        game.setAmountOfCorrect1(correct_ans+1);
+      else
+        game.setAmountOfCorrect2(correct_ans+1);
+      if(new Integer(correct_ans+1).compareTo(3)==0){
         actualUser.setLifes(actualUser.getLifes()+1);
-        req.session().removeAttribute("correct_answer");
-        req.session().attribute("correct_answer",0); //Reset the correct answer.
+        if(GameService.isPlayerOne(gameID,userID))
+          game.setAmountOfCorrect1(0);
+        else
+          game.setAmountOfCorrect2(0);
         return true;
       }
     }
