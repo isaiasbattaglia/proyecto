@@ -1,0 +1,64 @@
+body{
+	background-image: url("/img/fondo.jpg");
+	background-size: 100%;
+	font-size: 15px;
+	text-align:center;
+	color:transparent;
+}
+.navbar {
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+  color: white !important;
+}
+.navbar-default {
+  background-color:rgba(1,1,1,.25);
+  background-image:none;
+  box-shadow:none;
+  font-size: 17px;
+}
+.navbar-default .navbar-brand {
+  color: white !important;
+  font-size: 25px;
+}
+
+.buttonNav{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.container{
+	text-align:center;
+	position:relative;
+		margin-top: 50px;
+}
+
+.box-body{
+	color:black
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #2A6A6F;
+    border-color: #2A6A68;
+}
+
+h4{
+	color:white;
+}
+
+#profile-image1 {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+	border:2px solid #787878 ;}
+	.tital{ font-size:16px; font-weight:500;}
+	 .bot-border{ border-bottom:1px #f8f8f8 solid;  margin:5px 0  5px 0}	
