@@ -14,6 +14,8 @@ var example;
 var game;
 var currentUserID;
 var count=0;
+var timmer;
+var myInterval;
 
 function getUserInfo() {
     $.ajax({
@@ -73,9 +75,9 @@ function update(msg){
         notifyTurn();
     if(data.msg=="wait"){
       id("playOrNot").innerHTML="Play";
+      showMessage("Esperando aceptacion de rival");
       var input = `<button class="btn btn-primary btn-lg round" onclick="cancelReq(${data.rivalID})"> Cancelar </button>`;
       insert("cancelButton",input);
-      showMessage("Esperando aceptacion de rival");
     }
     if(data.msg=="acceptReject"){
         id("playOrNot").innerHTML="Play";
@@ -131,6 +133,7 @@ function showWinMessage(){
 
 function showQuestion(msg){
   clear();
+  clearInterval(myInterval);
   var data = JSON.parse(msg.data);
   var span= `<span class="btn-label"><i></i></span>`;
   var input1=`<input id="answer1" type="hidden" name="q_answer" value="${data.option1}">${data.option1}`;
@@ -144,15 +147,27 @@ function showQuestion(msg){
 
   var input4=`<input id="answer4" type="hidden" name="q_answer" value="${data.option4}">${data.option4}`;
   var label4=`<label onclick="sendAnswer('${data.option4}')" class="element-animation1 btn btn-lg btn-primary btn-block">${span} ${input4}</label>`;
+  timmer=6;
   id("playOrNot").innerHTML="Play";
   id("question").innerHTML=data.question;
   id("options").innerHTML=label1;
   id("options").innerHTML+=label2;
   id("options").innerHTML+=label3;
   id("options").innerHTML+=label4;
+  myInterval = setInterval(fun,1000);
+}
+
+function fun() {
+  if(timmer<=0)
+    getWrongAnswer2();
+  else{
+    timmer--;
+    id("qid").innerHTML=timmer;
+  }
 }
 
 function sendAnswer(answer){
+  clearInterval(myInterval);
   var jsonObj = {"id": currentUserID, "answer":answer, "message":"answered", "gameID":game, "questionID":question};    
   var jsonString = JSON.stringify(jsonObj);
   webSocket.send(jsonString);
@@ -319,4 +334,17 @@ function sendGameRequest(rivalID){
   var jsonObj = {"id": currentUserID, "rivalID":rivalID, "message":"GameRequest"};
   var jsonString = JSON.stringify(jsonObj);
   webSocket.send(jsonString);
+}
+
+
+
+function getWrongAnswer2() {
+    $.ajax({
+        type: "get",
+        url: "/getWrongAnswer",
+        async: false,
+        success : function(answer) {
+          sendAnswer(answer);
+        }
+    });
 }

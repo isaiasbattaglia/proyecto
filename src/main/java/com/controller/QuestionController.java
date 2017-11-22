@@ -31,7 +31,7 @@ public class QuestionController{
       Integer categoryID = Integer.parseInt(req.queryParams("category_id"));
       Category category = CategoryService.getCategory(categoryID);
       Question question = category.getQuestion();
-      List<String> answerList = QuestionService.randomAnswers(question);  //Preguntar!
+      List<String> answerList = QuestionService.randomAnswers(question);
       map.put("category",req.queryParams("category"));
       map.put("Question",question.getDescription());
       map.put("answer1",answerList.get(0));
