@@ -19,7 +19,7 @@ public class Question extends Model {
   *Constructor de la clase Question
   *@Param description descripcion pregunta, ans1,ans2,ans2,ans4 respuestas a la pregunta
   **/
-  public Question(String description,String ans1, String ans2, String ans3, String ans4, Long id_C){
+  public Question(String description,String ans1, String ans2, String ans3, String ans4, Integer id_C){
     validatePresenceOf("description").message("Please, provide a description"); 
     validatePresenceOf("answer1").message("Please, provide all answers"); 
     validatePresenceOf("answer2").message("Please, provide all answers"); 
@@ -34,15 +34,46 @@ public class Question extends Model {
     saveIt();
 	}
 
-  //Metodo que realiza una permutacion aleatoria de las respuestas de una pregunta.
-  public List<String> randomAnswers(){
-    List<String> arr = new ArrayList<String>();
-    arr.add(0,(String)this.get("answer1"));
-    arr.add(1,(String)this.get("answer2"));
-    arr.add(2,(String)this.get("answer3"));
-    arr.add(3,(String)this.get("answer4"));
-    Collections.shuffle(arr);
-    return arr;
+  public void setDescription(String description){
+    set("description", description);
+  }
+
+  public void setAnswer1(String a1){
+    set("answer1",a1);
+  }
+  public void setAnswer2(String a2){
+    set("answer2",a2);
+  }
+  public void setAnswer3(String a3){
+    set("answer3",a3);
+  }
+  public void setAnswer4(String a4){
+    set("answer4",a4);
+  }
+
+  public void setCategoryId(Integer id){
+    set("category_id",id);
+  }
+
+  public String getDescription(){
+    return (String)get("description");
+  }
+
+  public String getAnswer1(){
+    return (String)get("answer1");
+  }
+
+  public String getAnswer2(){
+    return (String)get("answer2");
+  }
+  public String getAnswer3(){
+    return (String)get("answer3");
+  }
+  public String getAnswer4(){
+    return (String)get("answer4");
+  }
+  public Integer getCategoryId(){
+    return (Integer)get("category_id");
   }
 
   //Obtiene la categoria(padre) de la pregunta.

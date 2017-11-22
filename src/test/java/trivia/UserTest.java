@@ -33,7 +33,7 @@ public class UserTest{
        user.set("username", "pepe");
        user.set("password", "hola");
        user.set("email", "hola@gmail");
-       user.set("lives", 3);
+       user.set("lifes", 3);
        user.set("total_points",0);
        user.set("correct_questions",0);
        user.set("incorrect_questions",0);
@@ -44,7 +44,7 @@ public class UserTest{
        user2.set("username", "pepe");
        user2.set("password", "hola");
        user2.set("email", "hola@gmail.com");
-       user2.set("lives", 3);
+       user2.set("lifes", 3);
        user2.set("total_points",0);
        user2.set("correct_questions",0);
        user2.set("incorrect_questions",0);
@@ -60,7 +60,7 @@ public class UserTest{
        user.set("username", "hola");
        user.set("password", "hola");
        user.set("email", "hola@gmail.com");
-       user.set("lives", 3);
+       user.set("lifes", 3);
        user.set("total_points",0);
        user.set("correct_questions",0);
        user.set("incorrect_questions",0);
@@ -71,7 +71,7 @@ public class UserTest{
        user2.set("username", "hola2");
        user2.set("password", "hola");
        user2.set("email", "hola@gmail.com");
-       user2.set("lives", 3);
+       user2.set("lifes", 3);
        user2.set("total_points",0);
        user2.set("correct_questions",0);
        user2.set("incorrect_questions",0);
@@ -82,19 +82,19 @@ public class UserTest{
    }
 
    @Test
-   public void validatePositiveAmountOfLives(){
+   public void validatePositiveAmountOflifes(){
        User user = new User();
        user.set("username", "pepe");
        user.set("password", "hola");
        user.set("email", "hola@gmail.com");
-       user.set("lives", -3);
+       user.set("lifes", -3);
        user.set("total_points",0);
        user.set("correct_questions",0);
        user.set("incorrect_questions",0);
        user.set("total_questions",0);
        user.set("level",0);
        user.saveIt();
-       assertFalse( ((Integer)user.get("lives"))>=0);
+       assertFalse( ((Integer)user.get("lifes"))>=0);
    }
    @Test
    public void validatePositiveAmountOfPoints(){
@@ -102,7 +102,7 @@ public class UserTest{
        user.set("username", "pepe");
        user.set("password", "hola");
        user.set("email", "hola@gmail.com");
-       user.set("lives", 3);
+       user.set("lifes", 3);
        user.set("total_points", -3);
        user.set("correct_questions",0);
        user.set("incorrect_questions",0);
@@ -118,7 +118,7 @@ public class UserTest{
        user.set("username", "pepe");
        user.set("password", "hola");
        user.set("email", "hola@gmail.com");
-       user.set("lives", 3);
+       user.set("lifes", 3);
        user.set("level", -3);
        user.set("total_points", 0);
        user.set("correct_questions",0);
@@ -135,7 +135,7 @@ public class UserTest{
     user.set("username", "pepe");
     user.set("password", "hola");
     user.set("email", "hola@gmail.com");
-    user.set("lives", 3);
+    user.set("lifes", 3);
     user.set("level", -3);
     user.set("total_points", 0);
     user.set("correct_questions",-200);
@@ -151,7 +151,7 @@ public class UserTest{
     user.set("username", "pepe");
     user.set("password", "hola");
     user.set("email", "hola@gmail.com");
-    user.set("lives", 3);
+    user.set("lifes", 3);
     user.set("level", -3);
     user.set("total_points", 0);
     user.set("correct_questions",0);
@@ -167,7 +167,7 @@ public class UserTest{
     user.set("username", "pepe");
     user.set("password", "hola");
     user.set("email", "hola@gmail.com");
-    user.set("lives", 3);
+    user.set("lifes", 3);
     user.set("level", -3);
     user.set("total_points", 0);
     user.set("correct_questions",0);
@@ -184,8 +184,8 @@ public class UserTest{
     u.set("username","matias");
     u.set("password","cabj");
     u.set("email","maty@cabj.com");
-    u.set("lives", 3);
-    u.set("lives", 3);
+    u.set("lifes", 3);
+    u.set("lifes", 3);
     u.set("total_points",0);
     u.set("correct_questions",0);
     u.set("incorrect_questions",0);
@@ -196,11 +196,11 @@ public class UserTest{
     Object id_O = u.getId();
     Long id = Long.parseLong(id_O.toString());
     Game game = new Game();
-    game.set("user_id",id);
-    game.set("questions_Correct",-1);
-    game.set("questions_Incorrect",0);
+    game.set("user1_id",id);
+    game.set("correct_questions1",-1);
+    game.set("wrong_questions1",0);
     game.saveIt();
-    assertEquals((((Integer)game.get("questions_Correct"))>=0),false);
+    assertEquals((((Integer)game.get("correct_questions1"))>=0),false);
   }
 
 
@@ -218,8 +218,8 @@ public class UserTest{
     u.set("username","matias");
     u.set("password","cabj");
     u.set("email","maty@cabj.com");
-    u.set("lives", 3);
-    u.set("lives", 3);
+    u.set("lifes", 3);
+    u.set("lifes", 3);
     u.set("total_points",0);
     u.set("correct_questions",0);
     u.set("incorrect_questions",0);
@@ -228,7 +228,7 @@ public class UserTest{
     u.saveIt();
     Game game = Game();
     game.saveIt();
-    assertEquals((((Integer)u.get("lives")).compareTo(new Integer(2)))==0,true);    
+    assertEquals((((Integer)u.get("lifes")).compareTo(new Integer(2)))==0,true);    
   }*/
 
 }

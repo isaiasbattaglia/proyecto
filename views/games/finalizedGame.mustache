@@ -1,17 +1,54 @@
 <!DOCTYPE html>
 <html>
 <header>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/finalizedGame.css">
+  <script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.js"></script>
 </header>
 <body>
-	<div class="caja">
+	<div>
 		<h1>{{user}}, finalizaste esta partida!</h1>
-		<h2>Respuestas correctas: {{Co_ans}}</h2>
-		<h2>Respuestas incorrectas: {{In_ans}}</h2>
-		<div class="img"> <img src="img/win.png"></div>
-		<form action="/games" method="get">
-			<input class="b1" type="submit" value="SEGUIR JUGANDO">
-		</form>
+		{{#win}}
+      <div class="container">
+          <div class="card card-container">
+              <img id="profile-img" class="profile-img-card" src="http://www.androidappsforpc.org/wp-content/uploads/2015/02/characters-1.png" />
+              <p id="profile-name" class="profile-name-card"></p>
+                  <h3>Ganaste</h3>
+                  <h3>Resultado: {{Co_ans}} | {{In_ans}}</h3>
+                  <form action="/games" method="get">
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>
+                  </form>
+          </div>
+      </div>
+    {{/win}}
+    {{#lose}}
+      <div class="container">
+          <div class="card card-container">
+              <img id="profile-img" class="profile-img-card" src="http://triviacrackkingdoms.com/img/characters/chara-marks.png" />
+              <p id="profile-name" class="profile-name-card"></p>
+                  <h3>Perdiste</h3>
+                  <h3>Resultado: {{Co_ans}} | {{In_ans}}</h3>
+                  <form action="/games" method="get">
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>
+                  </form>
+          </div>
+      </div>
+    {{/lose}}
+    {{#draw}}
+      <div class="container">
+          <div class="card card-container">
+              <img id="profile-img" class="profile-img-card" src="http://www.triviacrackkingdoms.com/img/rules/king.png" />
+              <p id="profile-name" class="profile-name-card"></p>
+                  <h3>Empataste</h3>
+                  <h3>Resultado: {{Co_ans}} | {{In_ans}}</h3>
+                  <form action="/games" method="get">
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>
+                  </form>
+          </div>
+      </div>
+    {{/draw}}
 	</div>
+	<script src="websocketDemo.js"></script>
 </body>
 </html>

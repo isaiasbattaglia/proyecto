@@ -3,8 +3,10 @@
 <head>
    <meta charset="utf-8">
    <link rel="stylesheet" href="css/bootstrap.min.css">
-   <link rel="stylesheet" href="css/ranking.css">
+   <link rel="stylesheet" href="css/gameHome.css">
    <!--<link rel="stylesheet" href="css/nuevo.css">-->
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
    <title>Pregunta2</title>
 </head>
 <body>
@@ -33,29 +35,21 @@
 			</header>
 		</div>
 		<!-- Ranking section -->
-    <div class="table-users">
-      <div class="header">Ranking - Top 10</div>
+    <div id="table" class="table-users">
+      <div class="header">Usuarios Online</div>
         <table cellspacing="0">
           <tr>
             <th class="col-xs-2">Avatar</th>
             <th class="col-xs-4">Nombre</th>
-            <th class="col-xs-2">Nivel</th>
-            <th class="col-xs-2">Puntos</th>
-            <th class="col-xs-2" width="230"></th>
+            <th class="col-xs-4"></th>
           </tr>
           <tr>
-          {{#ranking}}
-            <td class="col-xs-2"><img src="img/rueda.png" alt="" /></td>
-            <td class="col-xs-4">{{username}}</td>
-            <td class="col-xs-2">{{level}}</td>
-            <td class="col-xs-2">Puntos:</td>
-            <td class="col-xs-2">Seguir/Dejar Seguir </td>
+          <td class="col-xs-2"><img src="img/rueda.png" alt="" /></td>
+          <td id="name" class="col-xs-4"><!-- Built by JS --></td>
+          <td id="userlist" class="col-xs-4"><!-- Built by JS --></td>
           </tr>
-          {{/ranking}}
         </table>
     </div>
+    <script src="websocketDemo.js"></script>
 </body>
- 	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/profile.js"></script>   
-</hmtl>
+</html>

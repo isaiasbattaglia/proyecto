@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html>
 <header>
-	<link rel="stylesheet" type="text/css" href="css/incorrect.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/finalizedGame.css">
+	<script src="/js/jquery.js"></script>
 </header>
 <body>
 	<div class="caja">
-		<h1>  {{incorrect}}</h1>
-		<h2>Respuesta Correcta: {{correct_answer}}</h2>
-		{{#final}}
+		<h1> </h1>
+	{{#final}}
+    <div class="container">
+      <div class="card card-container2">
+        <img id="profile-img" class="profile-img-card3" src="http://preguntados.com/compiled/img/character-crown2.png" />
+          <p id="profile-name" class="profile-name-card2"></p>
+            <h3>{{incorrect}}</h3>
+            <h3>Respuesta correcta: {{correct_answer}}</h3>
+			      <form action="/finalizedGame" method="get">
+              <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>
+              <input type="hidden" name="game_id" value="{{game_id}}">
+            </form>
+      </div>
+    </div>
+	{{/final}}
+  {{#no_final}}
+    <div class="container">
+      <div class="card card-container2">
+        <img id="profile-img" class="profile-img-card3" src="http://preguntados.com/compiled/img/character-crown2.png" />
+          <p id="profile-name" class="profile-name-card2"></p>
+            <h3>{{incorrect}}</h3>
+            <h3>Respuesta correcta: {{correct_answer}}</h3>
+            <form action="/games" method="get">
+              <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Continuar</button>
+				      <input type="hidden" name="game_id" value="{{game_id}}">
+            </form>
+      </div>
+    </div>
+  {{/no_final}}
 
-			<form action="/finalizedGame" method="get">
-				<input class="b1" type="submit" value="SEGUIR JUGANDO">
-				<input type="hidden" name="game_id" value="{{game_id}}">
-			</form>
-		{{/final}}
-		{{#no_final}}
-			<form action="/games" method="get">
-				<input class="b1" type="submit" value="CONTINUAR">
-				<input type="hidden" name="game_id" value="{{game_id}}">
-			</form>
-		{{/no_final}}
-	</div>
+	<script src="websocketDemo.js"></script>
 </body>
 </html>

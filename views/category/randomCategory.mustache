@@ -1,48 +1,128 @@
 <!DOCTYPE html>
 <html>
 <header>
-	<link rel="stylesheet" type="text/css" href="css/randomCategory.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/finalizedGame.css">
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/jquery.js"></script>
 </header>
 <body>
-	<div class="box">
-		<form action="/games" method="get">
-				<input class="cancelar" type="submit" value=" X ">
-		</form>
+	<div>
 			{{#historia}}
-				<p>Categoria Aleatoria:</p>
-				<div><img src="img/historia.png"></div>
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/historia.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form> 
+            </div>
+        </div>
 			{{/historia}}
 			{{#arte}}
-				<p>Categoria Aleatoria:</p>
-				<div><img src="img/arte.png"></div>
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/arte.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form> 
+            </div>
+        </div>
 			{{/arte}}
 	
 			{{#ciencia}}
-				<p>Categoria Aleatoria:</p>
-				<div><img src="img/ciencia.png"></div>
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/ciencia.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form> 
+            </div>
+        </div>
 			{{/ciencia}}
 			{{#entretenimiento}}
-				<p>Categoria Aleatoria:</p>
-				<div><img src="img/entretenimiento.png"></div>
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/entretenimiento.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form> 
+            </div>
+        </div>
 			{{/entretenimiento}}
 
 			{{#deportes}}
-				<p>Categoria Aleatoria:</p>
-				<div><img src="img/deporte.png"></div>
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/deporte.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form> 
+            </div>
+        </div>
 			{{/deportes}}
 			{{#geografia}}
-				<p>Categoria Aleatoria:</p>
-				<div><img src="img/geo.png"></div>
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/geo.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form>   
+            </div>
+        </div>
 			{{/geografia}}
-
-
-		<h1>{{category}}</h1>
-		<form action="/questions" method="get">
-			<input type="hidden" name="category" value="{{category}}">
-			<input type="hidden" name="category_id" value="{{category_id}}">
-			<input type="hidden" name="game_id" value="{{game_id}}">
-			<input class="jugar" type="submit" value="Jugar">
-		</form>		
+      {{#comodin}}
+        <div class="container">
+            <div class="card card-container">
+                <h3>Categoria aleatoria:</h3>
+                <img id="profile-img" class="profile-img-card2" src="img/comodin.png" />
+                <p id="profile-name" class="profile-name-card"></p>
+                    <h3>{{category}}</h3>
+                    <form action="/questions" method="get">
+                      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Jugar</button>
+                      <input type="hidden" name="category" value="{{category}}">
+                      <input type="hidden" name="category_id" value="{{category_id}}">
+                      <input type="hidden" name="game_id" value="{{game_id}}">
+                    </form>   
+            </div>
+        </div>
+      {{/comodin}}
 	</div>
+	<script src="websocketDemo.js"></script>
 </body>
 </html>

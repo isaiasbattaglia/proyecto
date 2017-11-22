@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="utf-8">
+  <style>
+    h3{
+      position:relative;
+      padding:15px;
+    }
+  </style>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/gameHome.css">
+  <link rel="stylesheet" href="css/question.css">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/question.js"></script>
+  <script src="/js/playDuelHelper.js"></script>
+   <title>Pregunta2</title>
+</head>
+<body onload="nobackbutton();" id="DuelLobby">
+  <!--Navigation Section-->
+  <div class="container">
+    <header>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-1">
+                <span class="sr-only">Menu</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button> 
+              <a href="#page-top" class="navbar-brand js-scroll-trigger"><strong>Pregunta2</strong></a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-1">
+              <ul class="nav navbar-nav navbar-right" role="tablist">
+                <li class="nav-item"><a href="/logout"> <strong>Cerrar Sesion</strong></a></li>
+                <li class="nav-item"><a href="/games"><strong>Home</strong> </a></li> 
+              </ul>
+            </div>
+          </div>
+        </nav>
+    </header>
+  </div>
+
+  <div id="table2" class="table-users">
+    <div class="header">Usuarios Online</div>
+      <table cellspacing="0">
+        <tr>
+          <th class="col-xs-2">Avatar</th>
+          <th class="col-xs-4">Nombre</th>
+          <th class="col-xs-4"></th>
+        </tr>
+        <tr>
+        <td class="col-xs-2"><img src="img/rueda.png" alt="" /></td>
+        <td id="name2" class="col-xs-4"><!-- Built by JS --></td>
+        <td id="userlistt" class="col-xs-4"><!-- Built by JS --></td>
+        </tr>
+      </table>
+  </div>
+  <!-- Message Section -->
+  <div>
+     <div class="modal-dialog">
+      <div>
+        <br>
+        <h3><span class="label label-warning" id="qid"></span></h3>
+        <h3 id="message">  </h3>
+        <h3 id="question"> </h3>
+        <p id="cancelButton"></p>
+        <div class="modal-body">
+          <div class="quiz" id="quiz" data-toggle="buttons">
+            <form id="options" onsubmit='waiting();return false'> 
+            <!-- Built by JS --> 
+            </form>          
+          </div>
+        </div>
+     </div>
+    </div>
+  </div>
+
+    <div id="result" class="container">
+      <div class="card card-container2">
+        <img id="profile-img" class="profile-img-card3" src="http://preguntados.com/compiled/img/character-crown2.png" />
+          <p id="profile-name" class="profile-name-card2"></p>
+            <h3 id="message2"> </h3>
+            <h3 id="message3"> </h3>
+      </div>
+    </div>
+
+      <div id="finalResults" class="container">
+          <div class="card card-container">
+              <img id="profile-img" class="profile-img-card" src="http://www.androidappsforpc.org/wp-content/uploads/2015/02/characters-1.png" />
+              <p id="profile-name" class="profile-name-card"></p>
+              <h3 id="win"> </h3>
+              <h3 id="correctAnswers"> </h3>
+              <h3 id="wrongAnswers"> </h3>
+              <p id="button2"></p>
+          </div>
+      </div>
+
+  <button class="negative" name="cancel" id="playOrNot" hidden="hidden"></button>
+  <script src="websocketDemo.js"></script>
+</body>
+</html>
+

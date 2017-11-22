@@ -1,62 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/gameHome.css">
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/gameHome.css">
+  <script src="/js/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+   <title>Pregunta2</title>
 </head>
-<body>
-	<table class="menu">
-		<tl>
-			<td>
-				<form action="/ranking" method="get">
-					<input class="ranking" type="submit" value="Ranking">
-				</form>
-			</td>
-			<td>
-				<form action="/profile" method="get">
-					<input class="profile" type="submit" value="Perfil">
-				</form>				
-			</td>
-			<td>
-				<form action="/logout" method="get">
-					<input class="logout" type="submit" value="Cerrar Sesion">
-				</form>					
-			</td>
-		</tl>
-	</table>
-
-	<div class="bloque">
-		<div class="lives">
-			<img src="img/vidas.png" width="30">
-			<p> Vidas: {{lives}} </p>
-		</div>
-		<div class="level">
-			<img src="img/win.png" width="30">
-			<p> Nivel:{{level}} </p>
-		</div>
-
-		<form action="/newGame" method="post">
-			<input class="newGame" type="submit" value="Nuevo Juego">
-		</form>
-		<h1>
-    		<b><font size="4" color="red">{{error}}</font></b>
-  		</h1>
-		<h4>Lista Juegos Pendientes</h4>
-		<div class="bloque2">
-				<ul>
-					{{#games}}
-					<div class="cajas">
-						<li> 
-							<h3>Juego:{{state}}</h3> 
-							<form action="/play" method="get">
-								<input class="jugar" type="submit" value="Jugar">
-								<input type="hidden" name="game_id" value="{{id}}">
-							</form>
-						</li>
-					</div>
-					{{/games}}
-				</ul>
-		</div>
-		
-	</div>
+<body  id="gameHome">
+    <!--Navigation Section-->
+    <div class="container">
+      <header>
+          <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-1">
+                  <span class="sr-only">Menu</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button> 
+                <a href="#page-top" class="navbar-brand js-scroll-trigger"><strong>Pregunta2</strong></a>
+              </div>
+              <div class="collapse navbar-collapse" id="navbar-1">
+                <ul class="nav navbar-nav navbar-right" role="tablist">
+                  <li class="nav-item"><a href="/logout"> <strong>Cerrar Sesion</strong></a></li>
+                  <li class="nav-item"><a href="/profile"><strong>Perfil</strong> </a></li> 
+                  <li class="nav-item"><a href="/ranking"><strong>ranking</strong> </a></li> 
+                  <li><img class="img1"src="img/win.png" width="20" height="20"></li>
+                  <li class="nav-item"><a><strong>{{level}}</strong> </a></li>
+                  <li><img class="img1" src="img/vidas.png" width="20" height="20"></li>
+                  <li class="nav-item"><a><strong>{{lifes}}</strong> </a></li> 
+                  {{#admin}}
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><strong>Admin panel</strong><span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="/createQuestion">Crear Pregunta</a></li>
+                        <li><a href="/createAdmin">Nuevo Administrador</a></li>
+                      </ul>
+                    </li>  
+                  {{/admin}}
+                </ul>
+              </div>
+            </div>
+          </nav>
+      </header>
+    </div>
+    <div class="buto">
+      <form action="/waitingRoom" method="get">
+        <button id="newGame" type="input" class="btn btn-primary btn-lg round nuevo"> Nuevo Juego </button>
+      </form>
+      <form action="/fightLobby" method="get">
+         <button id="fight" onclick="sendDuelInfo()" type="input" class="btn btn-primary btn-lg round duelo"> Duelo </button>
+      </form>
+    </div>
+    <!-- My turn section -->
+  {{#notEmptyGames}}
+    <div class="table-users">
+      <div class="header">Mi turno</div>
+        <table cellspacing="0">
+          <tr>
+            <th class="col-xs-4">Rival</th>
+            <th class="col-xs-2">Ronda</th>
+            <th class="col-xs-2">Resultado</th>
+            <th class="col-xs-2"></th>
+          </tr>
+          <tr>
+          {{#games}}
+            <td class="col-xs-4"><img src="img/rueda.png" alt="" />{{state}}</td>
+            <td class="col-xs-2">{{round}}</td>
+            <td class="col-xs-2">{{amount_of_categories1}}|{{amount_of_categories2}}</td>
+            <td class="col-xs-2">
+              <form action="/play" method="get">
+                  <button type="input" class="btn btn-primary btn-lg round"> Jugar </button>
+                  <input type="hidden" name="game_id" value="{{id}}">
+              </form>
+            </td>
+          </tr>
+          {{/games}}
+        </table>
+    </div>
+  {{/notEmptyGames}}
+    <!-- Finalized games -->
+  {{#notEmptyFGames}}
+    <div class="table-users">
+      <div class="header">Juegos Finalizados</div>
+        <table cellspacing="0">
+          <tr>
+            <th class="col-xs-4">Rival</th>
+            <th class="col-xs-2">Ronda</th>
+            <th class="col-xs-2">Resultado</th>
+            <th class="col-xs-2"></th>
+          </tr>
+          <tr>
+          {{#finalizedGames}}
+            <td class="col-xs-4"><img src="img/rueda.png" alt="" />{{state}}</td>
+            <td class="col-xs-2">{{round}}</td>
+            <td class="col-xs-2">{{amount_of_categories1}}|{{amount_of_categories2}}</td>
+            <td class="col-xs-2">
+              <form action="/finalizedGame" method="get">
+                <button type="input" class="btn btn-primary btn-lg round"> Ver </button>
+                <input type="hidden" name="game_id" value="{{id}}">
+              </form>
+              <button onclick="deleteGame({{id}})" type="input" class="btn btn-primary btn-lg round"> Eliminar </button>
+            </td>
+          </tr>
+          {{/finalizedGames}}
+        </table>
+    </div>
+  {{/notEmptyFGames}}
+    <input id="userid" type="hidden" name="userid" value="{{user_id}}">
+    <script src="websocketDemo.js"></script>
 </body>
 </html>

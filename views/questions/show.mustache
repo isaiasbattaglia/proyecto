@@ -1,58 +1,55 @@
 <!DOCTYPE html>
 <html>
 <header>
-	<link rel="stylesheet" type="text/css" href="css/question.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/question.css">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+	<script src="/js/question.js"></script>
 </header>
 <body>
-	<div class="bloque">
-		<form action="/games" method="get">
-			<input class="cancelar" type="submit" value=" X ">
-		</form>
-
-		<h2>{{category}}</h2>
-		<br>
-		<h1>{{Question}}</h1>
-		
-		<div class="bloque2">
-			<p>
-				<form action="/answer?question={{answer1}}" method="post">
-				<input type="submit" value="{{answer1}}">
-				<input type="hidden" name=quest_id value="{{quest.id}}">
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				</form>
-			</p>
-
-			<p>
-				<form action="/answer?question={{answer2}}" method="post">
-				<input type="submit" value="{{answer2}}">
-				<input type="hidden" name=quest_id value="{{quest.id}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				</form>
-			</p>
-
-			<p>
-				<form action="/answer?question={{answer3}}" method="post">
-				<input type="submit" value="{{answer3}}">
-				<input type="hidden" name=quest_id value="{{quest.id}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				</form>
-			</p>
-
-			<p>
-				<form action="/answer?question={{answer4}}" method="post">
-				<input type="submit" value="{{answer4}}">
-				<input type="hidden" name=quest_id value="{{quest.id}}">	
-				<input type="hidden" name="game_id" value="{{game_id}}">	
-				</form>
-			</p>	
-
-		</div>
-
-		<div>
-			<img src="img/pregunta2.png">
-		</div>		
-	</div>
-	
-
+	<p id="timer"> </p>
+	<div>
+     <div class="modal-dialog">
+      <div>
+        <h3><span class="label label-warning" id="qid"></span></h3>
+        <h3 id="category"> {{category}}</h3>
+        <h3 id="question"> {{Question}}</h3>
+        <div class="modal-body">
+          <div class="quiz" id="quiz" data-toggle="buttons">
+            <label onclick="sendUserAnswer(1)" class="element-animation1 btn btn-lg btn-primary btn-block">
+              <span class="btn-label"><i ></i></span>
+                <input id="answer1" type="radio" name="q_answer" value="{{answer1}}">{{answer1}}
+            </label>
+            <label onclick="sendUserAnswer(2)" class="element-animation1 btn btn-lg btn-primary btn-block">
+              <span class="btn-label"><i ></i></span>
+                <input id="answer2" type="radio" name="q_answer" value="{{answer2}}">{{answer2}}
+            </label>
+            <label  onclick="sendUserAnswer(3)" class="element-animation1 btn btn-lg btn-primary btn-block">
+              <span class="btn-label"><i ></i></span>
+                <input id="answer3" type="radio" name="q_answer" value="{{answer3}}">{{answer3}}
+            </label>
+            <label onclick="sendUserAnswer(4)" class="element-animation1 btn btn-lg btn-primary btn-block">
+              <span class="btn-label"><i ></i></span>
+                <input id="answer4" type="radio" name="q_answer" value="{{answer4}}">{{answer4}}
+            </label>
+            <form id="wrongAnswer" type="hidden" action="/answer?answer={{answer5}}" method="post">
+                <input type="hidden" name="chooseCategory" value="{{chooseCategory}}">  
+                <input type="hidden" name=question_id value="{{quest.id}}"> 
+                <input type="hidden" name="game_id" value="{{game_id}}">  
+            </form>
+            <form id="answer" type="hidden" action="/answer" method="post">
+                <input id="answ" type="hidden" name="answer" value="">  
+                <input type="hidden" name="chooseCategory" value="{{chooseCategory}}">  
+                <input type="hidden" name=question_id value="{{quest.id}}"> 
+                <input type="hidden" name="game_id" value="{{game_id}}">  
+            </form>
+          </div>
+        </div>
+     </div>
+    </div>
+  </div>
+	<script src="websocketDemo.js"></script>
+	<script src="timeOut.js"></script>
 </body>
 </html>
